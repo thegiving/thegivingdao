@@ -1,5 +1,5 @@
 {
-   "solidity.packageDefaultDependenciesDirectory": "node_modules/@scaffold-eth/hardhat/node_modules/",
+   "solidity.packageDefaultDependenciesDirectory": "/hardhat/node_modules/",
    "solidity-va.test.defaultUnittestTemplate": "hardhat",
    "explorerExclude.backup": null,
    "eslint.workingDirectories": [

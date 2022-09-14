@@ -1,7 +1,15 @@
 {
-  "name": "thegiving",
+  "name": "@thegiving/monorepo",
   "version": "1.0.0",
   "description": "Decentralized crowd funding platform",
+  "private": true,
+  "repository": "git+https://github.com/thegiving/thegivingdao.git",
+  "author": "Shireen T. <shireentaha@shireens-mbp.lan>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thegiving/thegivingdao/issues"
+  },
+  "homepage": "https://github.com/thegiving/thegivingdao#readme",
   "keywords": [
     "ethereum",
     "react",
@@ -9,32 +17,36 @@
     "workspaces",
     "yarn"
   ],
+  "packageManager": "yarn@3.2.3",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "dev": "concurrently --kill-others-on-fail \"yarn contracts\"  \"yarn frontend\"",
+    "frontend": "yarn workspace frontend dev",
+    "frontend:build": "yarn workspace frontend build",
+    "frontend:start": "yarn workspace frontend start",
+    "frontend:dev": "yarn workspace frontend dev",
+    "frontend:lint": "yarn workspace frontend link",
+    "frontend:test": "yarn workspace frontend test",
+    "frontend:cypress": "yarn workspace frontend cypress",
+    "frontend:test:ci": "yarn workspace frontend test:ci",
+    "hardhat:chain": "yarn workspace hardhat chain",
+    "hardhat:test": "yarn workspace hardhat test",
+    "hardhat:compile": "yarn workspace hardhat compile",
+    "hardhat:deploy": "yarn workspace hardhat deploy",
+    "hardhat:accounts": "yarn workspace hardhat accounts",
+    "hardhat:balance": "yarn workspace hardhat balance",
+    "hardhat:send": "yarn workspace hardhat send",
+    "hardhat:test:ci": "yarn workspace hardhat test:ci"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thegiving/thegivingdao.git"
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thegiving/thegivingdao/issues"
-  },
-  "homepage": "https://github.com/thegiving/thegivingdao#readme",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/@graphprotocol/graph-ts",
-      "**/@graphprotocol/graph-ts/**",
-      "**/hardhat",
-      "**/hardhat/**",
-      "**/hardh:at-ts",
-      "**/hardhat-ts/**"
-    ]
-  },
-  "dependencies": {}
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
 }

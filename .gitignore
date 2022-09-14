@@ -9,12 +9,8 @@ packages/hardhat/*.txt
 
 packages/hardhat/artifacts*
 packages/hardhat/deployments
-packages/react-app/contracts/*
-!packages/react-app/contracts/external_contracts.js
 packages/hardhat/cache*
 packages/**/data
-!packages/react-app/contracts/contracts.js
-
 
 # ts
 packages/hardhat-ts/cache
@@ -27,6 +23,8 @@ tenderly.yaml
 # dependencies
 /node_modules
 /.pnp
+.pnp.cjs
+.pnp.loader.mjs
 .pnp.js
 
 # testing
@@ -35,9 +33,11 @@ coverage
 # production
 build
 # yarn / eslint
+.yarn
 .yarn/cache
 .yarn/install-state.gz
 .yarn/build-state.yml
+.yarnrc.yml
 .eslintcache
 # testing
 coverage
