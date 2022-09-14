@@ -1,24 +1,40 @@
 {
   "name": "thegiving",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Decentralized crowd funding platform",
+  "keywords": [
+    "ethereum",
+    "react",
+    "hardhat",
+    "workspaces",
+    "yarn"
+  ],
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "hardhat": "^2.11.1",
-    "next": "12.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thegiving/thegivingdao.git"
   },
-  "devDependencies": {
-    "autoprefixer": "^10.4.9",
-    "eslint": "8.23.1",
-    "eslint-config-next": "12.3.0",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8"
-  }
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thegiving/thegivingdao/issues"
+  },
+  "homepage": "https://github.com/thegiving/thegivingdao#readme",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**",
+      "**/hardhat",
+      "**/hardhat/**",
+      "**/hardh:at-ts",
+      "**/hardhat-ts/**"
+    ]
+  },
+  "dependencies": {}
 }

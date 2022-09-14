@@ -1,34 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div id="top"></div>
+
+<br />
+<div align="center">
+  <a href="https://github.com/thegiving/thegivingdao/">
+    <img src="frontend/public/giving.png" alt="Logo" width="110" height="110">
+  </a>
+
+<h3 align="center">The Giving - a fully decentralized GoFundMe</h3>
+
+</div>
+
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://github.com/thegiving/thegivingdao/)
+
+The Giving is a fully decentralized charity organization like GoFundMe which is able to accept donations in crypto or fiat currencies. 
+
+### Built With
+
+- [Next.js](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Solidity](https://soliditylang.org/)
+- [Polygon](https://polygon.technology/)
+- [The Graph](https://thegraph.com/en/)
+
+
+<!-- GETTING STARTED -->
 
 ## Getting Started
 
-First, run the development server:
+To get this application up and and running on your local machine follow these simple steps.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You need to have Node.js, NPM and hardhat installed on your computer, before running this project.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/thegiving/thegivingdao
+   ```
+2. Install NPM packages
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   ```sh
+   npm install
+   ```
 
-## Learn More
+   or
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+   yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Compile the smart contract
+   ```sh
+   npx hardhat compile
+   ```
+4. Deploy the smart contract
+5. Get your contract address and paste in in `connectContract.js`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+6. Deploy subgraph in `subragph` directory by following steps in `subgraph/README.md` (optional, since it is already deployed in hosted service)
 
-## Deploy on Vercel
+7. Get subgraph query endpoint after deployment and update it in `apollo-client.js`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```js
+    const client = new ApolloClient({
+      uri: "YOUR_SUBGRAPH_LINK_HERE", // <-- Update this
+      cache: new InMemoryCache(),
+    });
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+8. Run the app
+
+   ```sh
+   npm start
+   ```
+[product-screenshot]: frontend/public/sample_landing_page.jpg
