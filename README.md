@@ -26,8 +26,9 @@ The Giving is a fully decentralized charity organization like GoFundMe which is 
 
 
 <!-- GETTING STARTED -->
+# 🏄‍♂️ Quick Start
 
-## Getting Started
+Prerequisites: [Node (v16 LTS)](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
 
 To get this application up and and running on your local machine follow these simple steps.
 
@@ -35,7 +36,7 @@ To get this application up and and running on your local machine follow these si
 
 You need to have Node.js, NPM and hardhat installed on your computer, before running this project.
 
-### Installation (for dev)
+### Installation
 
 > Clone the repo and cd to the project
    ```sh
@@ -55,9 +56,20 @@ You need to have Node.js, NPM and hardhat installed on your computer, before run
    yarn hardhat:local-deploy
    ```
 
+> in a third terminal window, start your 📱 frontend:
+   ```sh
+   yarn frontend
+   ```
+
+
 ### Deploy to Polygon Mumbai:
 
 Coming Soon... 🎉
+
+
+# 📚 Documentation
+
+For documentation visit: [docs.thegiving.io](https://www.notion.so/EthOnline-Decentralized-GoFundMe-65275a7a75d745c0aa95731627d96d0c)
 
 
 <!-- > Get your contract address and paste in in `connectContract.js`
