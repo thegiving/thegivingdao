@@ -1,4 +1,4 @@
-name: nodejs-tests
+name: Hardhat Contract Tests
 
 on: [push, pull_request]
 
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 16.8.0
+          node-version: 18.7.0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -31,7 +31,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Compile
-        run: yarn contracts:compile
+        run: yarn hardhat:compile
 
-      - name: Test
-        run: yarn contracts:test:ci
+      # - name: Test
+      #   run: yarn hardhat:test:ci

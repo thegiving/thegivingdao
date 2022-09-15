@@ -3,10 +3,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/thegiving/thegivingdao/">
-    <img src="frontend/public/giving.png" alt="Logo" width="110" height="110">
+    <img src="packages/frontend/public/giving.png" alt="Logo" width="110" height="110">
   </a>
 
-<h3 align="center">The Giving - a fully decentralized GoFundMe</h3>
+<h3 align="center">The Giving - A Fully Decentralized GoFundMe</h3>
 
 </div>
 
@@ -35,45 +35,42 @@ To get this application up and and running on your local machine follow these si
 
 You need to have Node.js, NPM and hardhat installed on your computer, before running this project.
 
-### Installation
+### Installation (for dev)
 
-1. Clone the repo
+> Clone the repo and cd to the project
    ```sh
-   git clone https://github.com/thegiving/thegivingdao
-   ```
-2. Install NPM packages
-
-   ```sh
-   npm install
+   git clone https://github.com/thegiving/thegivingdao thegiving
+   cd thegiving
    ```
 
-   or
+> install and start your 👷‍ Hardhat chain:
 
    ```sh
    yarn install
+   yarn chain
    ```
 
-3. Compile the smart contract
+> in a second terminal window, 🛰 deploy your contract:
    ```sh
-   npx hardhat compile
+   yarn hardhat:local-deploy
    ```
-4. Deploy the smart contract
-5. Get your contract address and paste in in `connectContract.js`
 
-6. Deploy subgraph in `subragph` directory by following steps in `subgraph/README.md` (optional, since it is already deployed in hosted service)
+### Deploy to Polygon Mumbai:
 
-7. Get subgraph query endpoint after deployment and update it in `apollo-client.js`
+Coming Soon... 🎉
+
+
+<!-- > Get your contract address and paste in in `connectContract.js`
+
+> Deploy subgraph in `subragph` directory by following steps in `subgraph/README.md` (optional, since it is already deployed in hosted service)
+
+> Get subgraph query endpoint after deployment and update it in `apollo-client.js`
 
     ```js
     const client = new ApolloClient({
       uri: "YOUR_SUBGRAPH_LINK_HERE", // <-- Update this
       cache: new InMemoryCache(),
     });
-    ```
+    ``` -->
 
-8. Run the app
-
-   ```sh
-   npm start
-   ```
-[product-screenshot]: frontend/public/sample_landing_page.jpg
+[product-screenshot]: packages/frontend/public/sample_landing_page.jpg

@@ -1,4 +1,4 @@
-name: CI - Test
+name: Frontend Tests
 on:
   push:
     branches:
@@ -27,14 +27,14 @@ jobs:
         run: yarn install        
 
       - name: Build App
-        run: yarn build
+        run: yarn frontend:build
 
-      - name: Run tests with jest
-        run: yarn test:ci
+      # - name: Run tests with jest
+      #   run: yarn frontend:test:ci
 
       - name: Cypress.io
         uses: cypress-io/github-action@v2
         with:
           working-directory: ./packages/web
-          start: yarn start
+          start: yarn frontend:start
           wait-on: 'http://localhost:3000'

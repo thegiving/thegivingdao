@@ -1,5 +1,5 @@
 {
-  "name": "@thegiving/monorepo",
+  "name": "thegiving",
   "version": "1.0.0",
   "description": "Decentralized crowd funding platform",
   "private": true,
@@ -17,14 +17,23 @@
     "workspaces",
     "yarn"
   ],
-  "packageManager": "yarn@3.2.3",
   "main": "index.js",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**",
+      "**/hardhat",
+      "**/hardhat/**",
+      "**/hardhat-ts",
+      "**/hardhat-ts/**"
+    ]
+  },
   "scripts": {
     "prepare": "husky install",
-    "dev": "concurrently --kill-others-on-fail \"yarn contracts\"  \"yarn frontend\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn chain\"  \"yarn frontend\"",
     "frontend": "yarn workspace frontend dev",
     "frontend:build": "yarn workspace frontend build",
     "frontend:start": "yarn workspace frontend start",
@@ -33,10 +42,12 @@
     "frontend:test": "yarn workspace frontend test",
     "frontend:cypress": "yarn workspace frontend cypress",
     "frontend:test:ci": "yarn workspace frontend test:ci",
+    "chain": "yarn workspace hardhat chain",
     "hardhat:chain": "yarn workspace hardhat chain",
     "hardhat:test": "yarn workspace hardhat test",
     "hardhat:compile": "yarn workspace hardhat compile",
-    "hardhat:deploy": "yarn workspace hardhat deploy",
+    "hardhat:local-deploy": "yarn workspace hardhat local-deploy",
+    "hardhat:testnet-deploy": "yarn workspace hardhat testnet-deploy",
     "hardhat:accounts": "yarn workspace hardhat accounts",
     "hardhat:balance": "yarn workspace hardhat balance",
     "hardhat:send": "yarn workspace hardhat send",
@@ -47,6 +58,8 @@
     "prettier": "^2.4.1"
   },
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.4.0",
+    "dotenv": "^16.0.2",
+    "husky": "^8.0.1"
   }
 }
