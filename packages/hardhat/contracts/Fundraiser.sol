@@ -80,13 +80,12 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     uint256 totalDonated;
   }
 
-  mapping(bytes32 => Campaign) public campaigns;
+  mapping(bytes32 => Campaign) public campaigns; // make private for gas efficiency
   mapping(address => Account) public accounts;
-  mapping(bytes32 => Campaign[]) public campaignsByAccount;
+  mapping(bytes32 => Campaign[]) public campaignsByAccount; // make private for gas efficiency
   mapping(bytes32 => string) public campaignCategories;
-  mapping(bytes32 => Donation[]) public donationsByCampaign;
+  mapping(bytes32 => Donation[]) public donationsByCampaign; // make private for gas efficiency
 
-  address public paymentController;
   Stats private _stats;
   bytes32[] private _campaignCategoryIds;
   string[] private _defaultCampaignCategories = [
@@ -106,11 +105,6 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     'Volunteer',
     'Other'
   ];
-
-  modifier controllerOnly() {
-    require(_msgSender() == paymentController, "CONTROLLER_UNAUTHORIZED");
-    _;
-  }
 
   modifier pauserOnly() {
     require(hasRole(PAUSER_ROLE, _msgSender()), "PAUSER_UNAUTHORIZED");
@@ -138,18 +132,16 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
   event CampaignUpdated(Campaign campaign, uint256 updatedAt);
   event AccountCreated(bytes32 indexed accountId, string accountDataCID, address indexed owner, uint256 timestamp);
   event CampaignCategoryCreated(bytes32 indexed categoryId, string indexed name, address indexed caller);
-  event ControllerChanged(address previousController, address newController);
+  // event ControllerChanged(address previousController, address newController);
   event DonationMade(uint256 amount, uint256 timestamp, address indexed caller);
   event DistributedFunds(bytes32 campaignId, uint256 amount, address indexed caller, uint256 timestamp);
   event CampaignClosed(bytes32 campaignId, address indexed caller, uint256 timestamp);
-  event CampaignPublished(bytes32 campaignId, address indexed caller, uint256 timestamp);
+  event CampaignPublished(bytes32 campaignId, CampaignState state, address indexed caller, uint256 timestamp);
 
-  constructor(address _paymentController) {
+  constructor() {
     _setRoleAdmin(ADMIN_ROLE, ADMIN_ROLE);
     _setupRole(ADMIN_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
-
-    paymentController = _paymentController;
     _setDefaultCampaignCategories();
   }
 
@@ -297,24 +289,24 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
   function distributeFunds(bytes32 campaignId, uint256 amount) accountOwnerOnly public {
     require(amount > 0 ether, "ZERO_AMOUNT");
     Campaign storage campaign = campaigns[campaignId];
+    require(campaign.donated > 0, "NO_DONATIONS_MADE");
     uint256 leftToDistribute = campaign.donated.sub(campaign.paid);
-    require(leftToDistribute > 0, "NO_DONATIONS");
+    require(leftToDistribute > 0, "DONATIONS_FULLY_PAID");
 
+    // if they are trying to take out more than what is left, just give what is left
     if (amount > leftToDistribute) {
       amount = leftToDistribute;
     }
 
-    campaign.paid = campaign.paid.sub(amount);
+    campaign.paid = campaign.paid.add(amount);
+    (bool success, ) = payable(_msgSender()).call{value: amount}("");
+    if (!success) {
+      campaign.paid = campaign.paid.sub(amount);
+    }
 
-    payTo(_msgSender(), amount);
-
+    require(success, "DISTRIBUTION_FAILURE");
     emit DistributedFunds(campaignId, amount, _msgSender(), block.timestamp);
   }
-
-  function payTo(address to, uint256 amount) internal {
-    (bool success, ) = payable(to).call{value: amount}("");
-    require(success);
-}
 
   function createAccount(string calldata dataCID, AccountKind kind) public {
     require(uint8(kind) <= 3, "INVALID_ACCOUNT_KIND");
@@ -364,7 +356,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     require(campaign.state == CampaignState.Draft || campaign.state == CampaignState.Closed, "UNABLE_TO_PUBLISH");
 
     campaign.state = CampaignState.Active;
-    emit CampaignPublished(campaignId, _msgSender(), block.timestamp);
+    emit CampaignPublished(campaignId,  campaign.state, _msgSender(), block.timestamp);
   }
 
   function pause() public virtual pauserOnly {
@@ -373,13 +365,5 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
 
   function unpause() public virtual pauserOnly {
     _unpause();
-  }
-
-  function setController(address newController) external adminOnly {
-    require(newController != address(0), "ZERO_ADDRESS");
-    require(paymentController != newController, "ALREADY_SET_AS_CONTROLLER");
-    address previousController = paymentController;
-    paymentController = newController;
-    emit ControllerChanged(previousController, newController);
   }
 }
