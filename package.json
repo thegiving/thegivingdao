@@ -48,6 +48,7 @@
     "hardhat:compile": "yarn workspace hardhat compile",
     "hardhat:local-deploy": "yarn workspace hardhat local-deploy",
     "hardhat:testnet-deploy": "yarn workspace hardhat testnet-deploy",
+    "hardhat:testnet-verify": "yarn workspace hardhat testnet-verify",
     "hardhat:accounts": "yarn workspace hardhat accounts",
     "hardhat:balance": "yarn workspace hardhat balance",
     "hardhat:send": "yarn workspace hardhat send",
