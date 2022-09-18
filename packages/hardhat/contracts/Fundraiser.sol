@@ -132,11 +132,10 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
   event CampaignUpdated(Campaign campaign, uint256 updatedAt);
   event AccountCreated(bytes32 indexed accountId, string accountDataCID, address indexed owner, uint256 timestamp);
   event CampaignCategoryCreated(bytes32 indexed categoryId, string indexed name, address indexed caller);
-  // event ControllerChanged(address previousController, address newController);
-  event DonationMade(uint256 amount, uint256 timestamp, address indexed caller);
-  event DistributedFunds(bytes32 campaignId, uint256 amount, address indexed caller, uint256 timestamp);
-  event CampaignClosed(bytes32 campaignId, address indexed caller, uint256 timestamp);
-  event CampaignPublished(bytes32 campaignId, CampaignState state, address indexed caller, uint256 timestamp);
+  event DonationMade(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
+  event DistributedFunds(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
+  event CampaignClosed(bytes32 indexed campaignId, address indexed caller, uint256 timestamp);
+  event CampaignPublished(bytes32 indexed campaignId, CampaignState state, address indexed caller, uint256 timestamp);
 
   constructor() {
     _setRoleAdmin(ADMIN_ROLE, ADMIN_ROLE);
@@ -281,7 +280,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
       Donation(msg.value, block.timestamp, _msgSender())
     );
 
-    emit DonationMade(msg.value, block.timestamp, _msgSender());
+    emit DonationMade(campaignId, msg.value, _msgSender(), block.timestamp);
     _stats.totalDonated = _stats.totalDonated.add(msg.value);
     _stats.totalDonations  = _stats.totalDonations.add(1);
   }
