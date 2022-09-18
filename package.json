@@ -1,24 +1,65 @@
 {
   "name": "thegiving",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Decentralized crowd funding platform",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "repository": "git+https://github.com/thegiving/thegivingdao.git",
+  "author": "Shireen T. <shireentaha@shireens-mbp.lan>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thegiving/thegivingdao/issues"
   },
-  "dependencies": {
-    "hardhat": "^2.11.1",
-    "next": "12.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+  "homepage": "https://github.com/thegiving/thegivingdao#readme",
+  "keywords": [
+    "ethereum",
+    "react",
+    "hardhat",
+    "workspaces",
+    "yarn"
+  ],
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**",
+      "**/hardhat",
+      "**/hardhat/**",
+      "**/hardhat-ts",
+      "**/hardhat-ts/**"
+    ]
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "concurrently --kill-others-on-fail \"yarn chain\"  \"yarn frontend\"",
+    "frontend": "yarn workspace frontend dev",
+    "frontend:build": "yarn workspace frontend build",
+    "frontend:start": "yarn workspace frontend start",
+    "frontend:dev": "yarn workspace frontend dev",
+    "frontend:lint": "yarn workspace frontend link",
+    "frontend:test": "yarn workspace frontend test",
+    "frontend:cypress": "yarn workspace frontend cypress",
+    "frontend:test:ci": "yarn workspace frontend test:ci",
+    "chain": "yarn workspace hardhat chain",
+    "hardhat:chain": "yarn workspace hardhat chain",
+    "hardhat:test": "yarn workspace hardhat test",
+    "hardhat:compile": "yarn workspace hardhat compile",
+    "hardhat:local-deploy": "yarn workspace hardhat local-deploy",
+    "hardhat:testnet-deploy": "yarn workspace hardhat testnet-deploy",
+    "hardhat:accounts": "yarn workspace hardhat accounts",
+    "hardhat:balance": "yarn workspace hardhat balance",
+    "hardhat:send": "yarn workspace hardhat send",
+    "hardhat:test:ci": "yarn workspace hardhat test:ci"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.9",
-    "eslint": "8.23.1",
-    "eslint-config-next": "12.3.0",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8"
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1"
+  },
+  "dependencies": {
+    "concurrently": "^7.4.0",
+    "dotenv": "^16.0.2",
+    "husky": "^8.0.1"
   }
 }

@@ -1,0 +1,13 @@
+{
+   "solidity.packageDefaultDependenciesDirectory": "/hardhat/node_modules/",
+   "solidity-va.test.defaultUnittestTemplate": "hardhat",
+   "explorerExclude.backup": null,
+   "eslint.workingDirectories": [
+      { "directory": "packages/hardhat", "changeProcessCWD": true },
+      { "directory": "packages/frontend", "changeProcessCWD": true },
+   ],
+   "search.exclude": {
+      "**/yarn-error.log": true,
+      "**/yarn.lock": true
+   }
+}

@@ -1,36 +1,67 @@
+packages/subgraph/subgraph.yaml
+packages/subgraph/generated
+packages/subgraph/abis/*
+packages/hardhat/*.txt
+**/aws.json
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+**/node_modules
+
+packages/hardhat/artifacts*
+packages/hardhat/deployments
+packages/hardhat/cache*
+packages/**/data
+
+# ts
+packages/hardhat-ts/cache
+# secrets
+.secret
+
+packages/subgraph/config/config.json
+tenderly.yaml
 
 # dependencies
 /node_modules
 /.pnp
+.pnp.cjs
+.pnp.loader.mjs
 .pnp.js
 
 # testing
-/coverage
-
-# next.js
-/.next/
-/out/
+coverage
 
 # production
-/build
+build
+# yarn / eslint
+.yarn
+.yarn/cache
+.yarn/install-state.gz
+.yarn/build-state.yml
+.yarnrc.yml
+.eslintcache
+# testing
+coverage
+
+# production
+build
+
+#Hardhat files
+cache
+artifacts
 
 # misc
 .DS_Store
-*.pem
+.env*
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# local env files
-.env*.local
+.idea
+.next
 
-# vercel
-.vercel
-
-# typescript
+# Local Netlify folder
+.netlify
 *.tsbuildinfo
-next-env.d.ts
+*.stackdump

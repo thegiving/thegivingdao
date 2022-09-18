@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"solidity.defaultCompiler": "localNodeModule",
+		"solidity.compileUsingRemoteVersion": "v0.8.9+commit.e5eed63a",
+		"solidity.compileUsingLocalVersion": "v0.8.9+commit.e5eed63a",
+		"solidity.packageDefaultDependenciesDirectory": "node_modules",
+		"solidity.packageDefaultDependenciesContractsDirectory": "",
+		"hardhat-language-server.trace.server.verbosity": "off",
+		"hardhat.telemetry": true
+	}
+}
