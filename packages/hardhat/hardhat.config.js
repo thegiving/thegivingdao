@@ -3,6 +3,7 @@ require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-deploy");
+require("hardhat-abi-exporter");
 
 const defaultNetwork = "localhost";
 module.exports = {
@@ -43,6 +44,16 @@ module.exports = {
         },
       }
     ],
+  },
+  abiExporter: {
+    path: "../frontend/contracts/",
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    only: ["Fundraiser"],
+    spacing: 2,
+    pretty: false,
+    fromat: "json"
   },
   namedAccounts: {
     deployer: {

@@ -40,7 +40,7 @@
     "accounts": "hardhat accounts --network hardhat",
     "testnet-deploy": "hardhat deploy --network mumbai",
     "local-deploy": "hardhat deploy --network hardhat --export-all ../frontend/contracts/hardhat_contracts.json",
-    "compile": "hardhat compile",
+    "compile": "hardhat compile --force",
     "chain": "hardhat node --network hardhat --no-deploy --watch",
     "testnet-verify": "hardhat etherscan-verify --network mumbai"
   }
