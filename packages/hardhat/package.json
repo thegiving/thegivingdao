@@ -37,14 +37,11 @@
   "scripts": {
     "test": "hardhat test --network hardhat",
     "test:ci": "npx hardhat test",
-    "accounts": "hardhat accounts",
+    "accounts": "hardhat accounts --network hardhat",
     "testnet-deploy": "hardhat deploy --network mumbai",
-    "local-deploy": "hardhat deploy --network localhost --export-all ../frontend/contracts/hardhat_contracts.json",
+    "local-deploy": "hardhat deploy --network hardhat --export-all ../frontend/contracts/hardhat_contracts.json",
     "compile": "hardhat compile",
     "chain": "hardhat node --network hardhat --no-deploy --watch",
-    "balance": "hardhat balance",
-    "send": "hardhat send",
-    "generate": "hardhat generate",
-    "account": "hardhat account"
+    "testnet-verify": "hardhat etherscan-verify --network mumbai"
   }
 }
