@@ -1,4 +1,4 @@
-import LandingPage from "./components/LandingPage";
+import LandingPage from "../components/LandingPage";
 import type { NextPage } from 'next'
 import exp from "constants";
 

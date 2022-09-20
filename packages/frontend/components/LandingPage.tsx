@@ -9,7 +9,7 @@ export default function LandingPage() {
             <span className="text-secondary">crypto</span>
           </h1>
           <p className="mb-6 mt-6 max-w-2xl font-medium lg:mb-8 md:text-lg lg:text-xl">
-            Join the world's most trusted decentralized crowdfunding platform. 
+            Join the world&apos;s most trusted decentralized crowdfunding platform. 
           </p>
           <div className='flex space-x-8 justify-start'>
             <button type="button" className="bg-white dark:text-primary-200 inline-flex justify-center items-center py-3 px-5 font-medium text-center rounded-lg border border-gray-200 shadow-md hover:shadow-lg dark:border-gray-400 dark:focus:ring-primary">Start a Fundraiser</button>
