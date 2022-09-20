@@ -1,5 +1,5 @@
 node_modules
-artifacts
-cache
-coverage*
-gasReporterOutput.json
+.next
+yarn.lock
+package-lock.json
+public
