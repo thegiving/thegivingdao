@@ -26,7 +26,44 @@ The Giving is a fully decentralized charity organization like GoFundMe which is 
 
 
 <!-- GETTING STARTED -->
-# 🏄‍♂️ Quick Start
+# 🏄‍♂️ Quick Start Options
+
+***Note***: ./.devcontainer/devcontainer.json (or set your own if using Option 2 below) There are environmental variables  
+that are set and may need to be updated to reflect accurate values.
+```json
+{
+    "containerEnv":{
+        "STAGING_INFURA_URL":"<Infura URL >", # https://infura.io/ create project Eth->mumbai 
+        "STAGING_PRIVATE_KEY":"<Infura PK>", # currently set with a burner
+        "ETHERSCAN_API_KEY":"<Etherscan API Key>" # https://etherscan.io/myapikey (set one up for yourself)
+
+    }
+}
+```
+
+## Option 1 | .devcontainer super speed [Using Docker]
+
+### Using VScode
+
+- Docker Desktop (windows)/Docker (linux)/Remote Docker connection with docker cli installed
+- Ensure vscode extention: `ms-vscode-remote.vscode-remote-extensionpack` is installed
+- Clone this repo and open in VScode
+    - the IDE should detect the Dev Container configuration file.
+    - Select [(Re)Open in Container]
+    - the Docker container will build itself and auto attache itself to VSCode.
+- If you want to start everything using `launch.json` with associated `task.json`
+    - Switch to [Run and Debug] Side menu
+    - A Green Right Arrow with Dropdown should be viewable. Select and Play
+        - (1) [Start Project Chain] for `yarn install && yarn chain` in debug mode
+        - (2) [Compile Contract(s)] for `yarn hardhat:local-deploy` in debug mode 
+            - note: this debug mode will auto close if the contracts are successful
+        - (3) [Start Frontend] for `yarn frontend` in deubg mode
+- Once all this is setup, you should be able to:
+    - connect using localhost:8545 (Metamask) network
+    - see "Hello World" at https://localhost:3000
+
+
+## Option 2 | The traditional set up your own env.
 
 Prerequisites: [Node (v16 LTS)](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
 
