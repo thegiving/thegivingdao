@@ -1,0 +1,31 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Start Project Chain",
+            "type":"node",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["chain"],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Install Dependencies",
+            "request": "launch"
+        },
+        {
+            "name": "Compile Contract(s)",
+            "type":"node",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["hardhat:local-deploy"],
+            "cwd": "${workspaceFolder}",
+            "request": "launch",
+            "postDebugTask": "Compile Contract completed"
+        },
+        {
+            "name": "Start Frontend",
+            "type":"node",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["frontend"],
+            "cwd": "${workspaceFolder}",
+            "request": "launch"
+        }
+    ]
+}
