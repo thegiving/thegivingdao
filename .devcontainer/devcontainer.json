@@ -1,0 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/javascript-node
+{
+    "name": "Node.js",
+    "build": {
+        "dockerfile": "Dockerfile",
+        // Update 'VARIANT' to pick a Node version: 18, 16, 14.
+        // Append -bullseye or -buster to pin to an OS version.
+        // Use -bullseye variants on local arm64/Apple Silicon.
+        "args": { "VARIANT": "18" }
+    },
+    "containerEnv":{
+        "STAGING_INFURA_URL":"https://polygon-mumbai.infura.io/v3/5587e9e7b41e453bb9e079034afa6605",
+        "STAGING_PRIVATE_KEY":"ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+        "ETHERSCAN_API_KEY":"ASYJ7N8DARW4IHKZFXA17ZBIH98KHBNCEI"
+
+    },
+
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "juanblanco.solidity",
+                "hbenl.vscode-mocha-test-adapter"
+            ]
+        }
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [8545,3000],
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "yarn install",
+
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "node",
+    "features": {
+        "docker-in-docker": "latest",
+        "github-cli": "latest",
+        "python": "latest",
+        "rust": "latest"
+    }
+}
