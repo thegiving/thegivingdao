@@ -1,7 +1,9 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-deploy");
+require("hardhat-abi-exporter");
 
 const defaultNetwork = "localhost";
 module.exports = {
@@ -27,6 +29,9 @@ module.exports = {
       gasPrice: 8000000000,
     },
   },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY
+  },
   solidity: {
     compilers: [
       {
@@ -40,6 +45,16 @@ module.exports = {
       }
     ],
   },
+  abiExporter: {
+    path: "../frontend/contracts/",
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    only: ["Fundraiser"],
+    spacing: 2,
+    pretty: false,
+    fromat: "json"
+  },
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
@@ -47,16 +62,7 @@ module.exports = {
     controller: {
       default: 1,
     }
-  },
-  abiExporter: {
-    path: "../frontend/contracts/ABI",
-    runOnCompile: true,
-    clear: true,
-    flat: true,
-    only: [],
-    spacing: 2,
-    pretty: false,
-  },
+  }
 };
 
 task("accounts", "Prints the list of accounts", async (_, { ethers }) => {

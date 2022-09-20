@@ -1,6 +1,3 @@
-packages/subgraph/subgraph.yaml
-packages/subgraph/generated
-packages/subgraph/abis/*
 packages/hardhat/*.txt
 **/aws.json
 
@@ -18,7 +15,6 @@ packages/hardhat-ts/cache
 .secret
 
 packages/subgraph/config/config.json
-tenderly.yaml
 
 # dependencies
 /node_modules
@@ -30,8 +26,6 @@ tenderly.yaml
 # testing
 coverage
 
-# production
-build
 # yarn / eslint
 .yarn
 .yarn/cache

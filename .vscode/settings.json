@@ -5,6 +5,7 @@
    "eslint.workingDirectories": [
       { "directory": "packages/hardhat", "changeProcessCWD": true },
       { "directory": "packages/frontend", "changeProcessCWD": true },
+      { "directory": "packages/subgraph", "changeProcessCWD": true },
    ],
    "search.exclude": {
       "**/yarn-error.log": true,
