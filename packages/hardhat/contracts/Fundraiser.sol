@@ -130,13 +130,12 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
 
   event CampaignCreated(Campaign campaign, uint256 createdAt);
   event CampaignUpdated(Campaign campaign, uint256 updatedAt);
-  event AccountCreated(bytes32 indexed accountId, string accountDataCID, address indexed owner, uint256 timestamp);
+  event AccountCreated(bytes32 indexed accountId, string accountDataCID, AccountKind kind, address indexed owner, uint256 timestamp);
   event CampaignCategoryCreated(bytes32 indexed categoryId, string indexed name, address indexed caller);
-  // event ControllerChanged(address previousController, address newController);
-  event DonationMade(uint256 amount, uint256 timestamp, address indexed caller);
-  event DistributedFunds(bytes32 campaignId, uint256 amount, address indexed caller, uint256 timestamp);
-  event CampaignClosed(bytes32 campaignId, address indexed caller, uint256 timestamp);
-  event CampaignPublished(bytes32 campaignId, CampaignState state, address indexed caller, uint256 timestamp);
+  event DonationMade(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
+  event DistributedFunds(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
+  event CampaignClosed(bytes32 indexed campaignId, CampaignState state, address indexed caller, uint256 timestamp);
+  event CampaignPublished(bytes32 indexed campaignId, CampaignState state, address indexed caller, uint256 timestamp);
 
   constructor() {
     _setRoleAdmin(ADMIN_ROLE, ADMIN_ROLE);
@@ -281,7 +280,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
       Donation(msg.value, block.timestamp, _msgSender())
     );
 
-    emit DonationMade(msg.value, block.timestamp, _msgSender());
+    emit DonationMade(campaignId, msg.value, _msgSender(), block.timestamp);
     _stats.totalDonated = _stats.totalDonated.add(msg.value);
     _stats.totalDonations  = _stats.totalDonations.add(1);
   }
@@ -323,7 +322,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     );
     accounts[_msgSender()] = account;
     _stats.totalAccounts = _stats.totalAccounts.add(1);
-    emit AccountCreated(accountId, dataCID, _msgSender(), block.timestamp);
+    emit AccountCreated(accountId, dataCID, kind, _msgSender(), block.timestamp);
   }
 
   function getCampaignKindByValue(CampaignKind _kind) external pure returns (string memory) {
@@ -348,7 +347,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     require(campaign.state == CampaignState.Active || campaign.state == CampaignState.Draft, "UNABLE_TO_CLOSE");
 
     campaign.state = CampaignState.Closed;
-    emit CampaignClosed(campaignId, _msgSender(), block.timestamp);
+    emit CampaignClosed(campaignId, campaign.state, _msgSender(), block.timestamp);
   } 
 
   function publishCampaign(bytes32 campaignId) external campaignManagerOnly {

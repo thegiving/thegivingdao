@@ -1,0 +1,90 @@
+type Campaign @entity {
+  id: ID!
+  campaignId: Bytes!
+  account: Account!
+  kind: CampaignKind!,
+  category: CampaignCategory!
+  goal: BigInt!
+  donated: BigInt!
+  donations: [Donation!] @derivedFrom(field: "campaign")
+  totalDonations: BigInt!
+  amountPaid: BigInt!
+  state: CampaignState!
+  createdAt: BigInt!
+  startAt: BigInt!
+  endAt: BigInt
+  name: String
+  description: String
+  imageURL: String
+  videoURL: String
+}
+
+type Account @entity {
+  id: ID!
+  accountId: Bytes!
+  owner: Bytes!
+  kind: AccountKind!
+  verificationState: VeritifcationState!
+  campaigns: [Campaign!] @derivedFrom(field: "account")
+  donations: [Donation!] @derivedFrom(field: "sender")
+  payouts: [Distribution!] @derivedFrom(field: "receiver")
+  totalCampaigns: BigInt!
+  totalDonations: BigInt!
+  timestamp: BigInt!
+  firstName: String
+  lastName: String
+  organization: String
+  email: String
+}
+
+type Donation @entity {
+  id: ID!
+  campaign: Campaign! 
+  amount: BigInt!
+  timestamp: BigInt!
+  sender: Account!
+}
+
+type Distribution @entity {
+  id: ID!
+  campaign: Campaign!
+  amount: BigInt!
+  timestamp: BigInt!
+  receiver: Account!
+}
+
+type CampaignCategory @entity {
+  id: ID!
+  categoryId: Bytes!
+  name: String!
+}
+
+enum AccountKind {
+  Individual
+  Charity
+  NonProfitCharity
+  NonProfit 
+}
+
+enum CampaignKind {
+  Governance
+  NoGovernance
+  OptionalGovernance
+}
+
+enum CampaignState {
+  Active
+  Draft
+  Refunding
+  Closed
+  Voting
+}
+
+enum VeritifcationState {
+  NotVerified
+  Verified
+  InReview
+  NotApplicable
+}
+
+
