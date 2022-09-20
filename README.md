@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/thegiving/thegivingdao/">
-    <img src="packages/frontend/public/giving.png" alt="Logo" width="110" height="110">
+    <img src="packages/frontend/public/2022_giving_logo_v01-01.png" alt="Logo" width="110" height="110">
   </a>
 
 <h3 align="center">The Giving - A Fully Decentralized GoFundMe</h3>
@@ -85,4 +85,4 @@ For documentation visit: [docs.thegiving.io](https://www.notion.so/EthOnline-Dec
     });
     ``` -->
 
-[product-screenshot]: packages/frontend/public/sample_landing_page.jpg
+[product-screenshot]: packages/frontend/public/landing_page_sample.png
