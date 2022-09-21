@@ -12,7 +12,13 @@ import "@rainbow-me/rainbowkit/styles.css"
 import '../styles/globals.css'
 
 import { RainbowKitSiweNextAuthProvider, GetSiweMessageOptions } from '@rainbow-me/rainbowkit-siwe-next-auth';
-import { getDefaultWallets, connectorsForWallets, RainbowKitProvider, wallet, lightTheme } from '@rainbow-me/rainbowkit';
+import {
+  getDefaultWallets,
+  connectorsForWallets,
+  RainbowKitProvider,
+  wallet,
+  lightTheme
+} from '@rainbow-me/rainbowkit';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 

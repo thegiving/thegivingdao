@@ -2,17 +2,16 @@ import React from "react";
 import Header from "./Header";
 // import Footer from "./Footer";
 
-interface LayoutProps {
+interface ILayoutProps {
   children: React.ReactNode;
-  className?: string;
 }
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<ILayoutProps> = ({ children }) => {
   return (
-    <>
+    <div>
       <Header />
       <main className="flex-1">{children}</main>
       {/* <Footer /> */}  
-    </>
+    </div>
   );
 };
 
