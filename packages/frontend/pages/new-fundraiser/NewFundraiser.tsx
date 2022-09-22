@@ -3,15 +3,9 @@ import Select from '../components/Select'
 import TextArea from '../components/TextArea'
 import FileInput from '../components/FileInput'
 import DateRangePicker from '../components/DateRangePicker'
-
-const fundraiserOptions = [
-  { fundraiser_type: 'Environment', value: 'environment', key: 1 },
-  { fundraiser_type: 'Business', value: 'business', key: 2 },
-  { fundraiser_type: 'Education', value: 'education', key: 3 },
-  { fundraiser_type: 'Medical', value: 'medical', key: 4 },
-  { fundraiser_type: 'Animal Rights', value: 'animal_rights', key: 5 },
-  { fundraiser_type: 'Human Rights', value: 'human_rights', key: 6 },
-]
+import ToggleSwitch from '../components/ToggleSwitch'
+import { fundraiserOptions } from '../../constants/FundraiserOptions'
+import Button from '../components/Button'
 
 export default function NewFundraiser() {
   return (
@@ -27,6 +21,21 @@ export default function NewFundraiser() {
           label={'Select a Category for the fundraiser'}
           id={'fundraiser-category'}
         />
+        <DateRangePicker
+          label={'Select a Date Range for the Fundraiser'}
+          optional={true}
+        />
+        <Input
+          placeholderText={'100'}
+          id={'fundraiser-amount'}
+          label={'Fundraiser Goal in USD'}
+        />
+        <ToggleSwitch
+          label={'Accept only stablecoins?'}
+          id={'accept-only-stablecoins'}
+          offText={'No'}
+          onText={'Yes'}
+        />
         <TextArea
           label={'Fundraiser Description'}
           id={'fundraiser-description'}
@@ -34,8 +43,14 @@ export default function NewFundraiser() {
             'Please provide a description about who funds gathered from the fundraiser will be used'
           }
         />
-        <FileInput label={'FileInput'} id={'file-input'} />
-        <DateRangePicker />
+        <FileInput
+          label={'Upload Images and Videos related to the Fundraiser'}
+          id={'file-input'}
+        />
+        <div className="flex justify-end space-x-8">
+          <Button text={`Cancel`} buttonType={'Secondary'} />
+          <Button text={`Start Fundraiser`} buttonType={'Primary'} />
+        </div>
       </div>
     </>
   )

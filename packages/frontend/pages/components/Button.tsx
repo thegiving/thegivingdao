@@ -12,7 +12,7 @@ export default function Button({
       <>
         <button
           type="button"
-          className="dark:text-primary-200 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white py-3 px-5 text-center font-medium shadow-md hover:shadow-lg dark:border-gray-400 dark:focus:ring-primary"
+          className="dark:text-primary-200 inline-flex min-w-[10rem] items-center justify-center rounded-lg border border-gray-200 bg-white py-3 px-5 text-center font-medium shadow-md hover:shadow-lg dark:border-gray-400 dark:focus:ring-primary"
         >
           {text}
         </button>
