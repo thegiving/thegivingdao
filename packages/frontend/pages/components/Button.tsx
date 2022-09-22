@@ -23,7 +23,7 @@ export default function Button({
       <>
         <button
           type="button"
-          className="hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 mr-3 items-center justify-center rounded-lg border border-gray-300 bg-primary py-3 px-5 text-center text-base font-medium text-white text-white shadow-md hover:shadow-lg focus:ring-4"
+          className="hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 mr-3 min-w-[10rem] items-center justify-center rounded-lg border border-gray-300 bg-primary py-3 px-5 text-center text-base font-medium text-white text-white shadow-md hover:shadow-lg focus:ring-4"
         >
           {text}
         </button>
