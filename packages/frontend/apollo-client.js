@@ -1,8 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { env } from "process";
 
 const client = new ApolloClient({
-  uri: env.SUBGRAPH_URL,
+  uri: "https://api.thegraph.com/subgraphs/name/thegiving/the-giving",
   cache: new InMemoryCache(),
 });
 

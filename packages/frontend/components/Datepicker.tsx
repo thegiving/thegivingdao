@@ -4,7 +4,13 @@ interface DatePickerInterface {
   placeholderText: string
 }
 
-export default function Input({
+const get_today = (id: string) => {
+  if (id === 'start-date') {
+    return new Date().toISOString().slice(0, 10)
+  } else return ''
+}
+
+export default function DatePicker({
   label,
   id,
   placeholderText,
@@ -29,7 +35,8 @@ export default function Input({
         </div>
         <input
           type="date"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+          value={get_today(id)}
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-black placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           placeholder={placeholderText}
         />
       </div>

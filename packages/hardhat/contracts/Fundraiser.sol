@@ -131,6 +131,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
   event CampaignCreated(Campaign campaign, uint256 createdAt);
   event CampaignUpdated(Campaign campaign, uint256 updatedAt);
   event AccountCreated(bytes32 indexed accountId, string accountDataCID, AccountKind kind, address indexed owner, uint256 timestamp);
+  event AccountUpdated(bytes32 indexed accountId, string dataCID, AccountKind kind, address indexed owenr, uint256 timestamp);
   event CampaignCategoryCreated(bytes32 indexed categoryId, string indexed name, address indexed caller);
   event DonationMade(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
   event DistributedFunds(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
@@ -272,7 +273,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     require(campaigns[campaignId].state == CampaignState.Active, "CAMPAIGN_NOT_ACTIVE");
 
     Campaign storage campaign = campaigns[campaignId];
-    
+
     campaign.donated = campaign.donated.add(msg.value);
     campaign.numDonations = campaign.numDonations.add(1);
 
@@ -325,6 +326,16 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
     emit AccountCreated(accountId, dataCID, kind, _msgSender(), block.timestamp);
   }
 
+  function updateAccount(string calldata dataCID, AccountKind kind) public accountOwnerOnly {
+    Account storage account = accounts[_msgSender()];
+    require(account.owner != address(0), 'ACCOUNT_NOT_FOUND');
+
+    account.dataCID = dataCID;
+    account.kind = kind;
+
+    emit AccountUpdated(account.id, dataCID, kind, _msgSender(), block.timestamp);
+  }
+
   function getCampaignKindByValue(CampaignKind _kind) external pure returns (string memory) {
     require(uint8(_kind) <= 2, "INVALID_CAMPAIGN_KIND");
     if (CampaignKind.Governance == _kind) return "Governance";
@@ -348,7 +359,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
 
     campaign.state = CampaignState.Closed;
     emit CampaignClosed(campaignId, campaign.state, _msgSender(), block.timestamp);
-  } 
+  }
 
   function publishCampaign(bytes32 campaignId) external campaignManagerOnly {
     Campaign storage campaign = campaigns[campaignId];

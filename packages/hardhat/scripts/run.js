@@ -11,7 +11,7 @@ const main = async () => {
   let accountKind = 0; // "Individual"
   let accountTxn = await fundraiser.createAccount(accountDataCID, accountKind);
   let account = await accountTxn.wait();
-  console.log("NEW ACCOUNT CREATED:", account.events[0].event);
+  console.log("NEW ACCOUNT CREATED:", account.events[0].args.accountId);
 
   let goal = hre.ethers.utils.parseEther("1");
   let startAt = 1718926200;
@@ -28,7 +28,7 @@ const main = async () => {
   );
   let campaign = await txn.wait();
   console.log("NEW CAMPAIGN CREATED:", campaign.events[0].event);
-  
+
   let campaignId = campaign.events[0].args[0].id;
   console.log("CAMPAIGN ID:", campaignId);
 
