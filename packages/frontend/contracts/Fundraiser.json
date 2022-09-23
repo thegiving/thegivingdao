@@ -47,6 +47,43 @@
       {
         "indexed": true,
         "internalType": "bytes32",
+        "name": "accountId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum Fundraiser.AccountKind",
+        "name": "kind",
+        "type": "uint8"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owenr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "AccountUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
         "name": "categoryId",
         "type": "bytes32"
       },
@@ -1210,6 +1247,24 @@
   {
     "inputs": [],
     "name": "unpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "internalType": "enum Fundraiser.AccountKind",
+        "name": "kind",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateAccount",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

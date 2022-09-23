@@ -11,16 +11,16 @@ import FundraiserButton from './FundraiserButton';
 export default function Header() {
   const navigation = [
     { name: 'How it Works', href: '/', current: true },
-    { name: 'View Projects', href: '/', current: false },
+    { name: 'View Projects', href: '/fundraisers', current: false },
   ]
   return (
     <header>
-      <Disclosure as="nav">
+      <Disclosure key={"nav"} as="nav">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-50 flex justify-between py-4">
               <div className="container-fluid relative z-10 flex items-center lg:gap-16">
-                <Disclosure.Button className="lg:hidden md:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button key={"mobile"} className="lg:hidden md:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -37,13 +37,14 @@ export default function Header() {
                       alt="The Giving Dao"
                       width={75}
                       height={75}
+                      key={"header-logo"}
                     />
                     <span className='font-bold text-lg'>TheGivingDao</span>
                   </a>
                 </div>
                 <div className="hidden lg:flex lg:gap-[4.5rem]">
                   {navigation.map((item) => (
-                    <Link href={item.href}>
+                    <Link key={item.name} href={item.href}>
                       <a
                         key={item.name}
                         className="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-lg transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"

@@ -9,7 +9,7 @@ interface INavProps {
 }
 export default function Navmenu({ address }: INavProps) {
   const { disconnect } = useDisconnect();
-  
+
   function handleDisconnect() {
     signOut();
     disconnect();

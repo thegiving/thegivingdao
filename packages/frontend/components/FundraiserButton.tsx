@@ -9,7 +9,7 @@ export default function FundraiserButton() {
   const router  = useRouter();
   const { openConnectModal } = useConnectModal();
   const [gettingSession, setGettingSession] = useState(false);
-  
+
   useEffect(() => {
     if (gettingSession && status === "authenticated") {
       router.push('/create-fundraiser');
@@ -18,7 +18,7 @@ export default function FundraiserButton() {
       router.push('/');
     }
   }, [session])
-    
+
   function handleOnClick(e: React.SyntheticEvent) {
     setGettingSession(true)
     if (!session && openConnectModal) {
@@ -29,10 +29,10 @@ export default function FundraiserButton() {
   }
 
   return (
-    <Button 
-      onClick={handleOnClick} 
+    <Button
+      onClick={handleOnClick}
       text={'Start a Fundraiser'}
       buttonType={'Secondary'}
-    />  
+    />
   );
 }

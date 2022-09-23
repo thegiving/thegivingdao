@@ -2,20 +2,33 @@ interface FileInputInterface {
   label: string
   id: string
   width?: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  optional?: boolean
 }
 
 export default function Input({
   label,
   id,
   width = 'w-full',
+  value,
+  onChange,
+  optional = false,
 }: FileInputInterface): JSX.Element {
   return (
     <>
-      <div className={`${width} pt-2 pb-2`}>
+      <div className={`${width} pb-10`}>
+        <label
+          htmlFor={id}
+          className="text-m mb-2 block font-medium text-gray-900"
+        >
+          {label}
+          {!optional && ' *'}
+        </label>
         <div className="flex w-full items-center justify-center">
           <label
             htmlFor="dropzone-file"
-            className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
@@ -41,7 +54,7 @@ export default function Input({
                 SVG, PNG, JPG or GIF (MAX. 800x400px)
               </p>
             </div>
-            <input id="dropzone-file" type="file" className="hidden" />
+            <input id="dropzone-file" type="file" className="hidden" value={value} onChange={onChange} />
           </label>
         </div>
       </div>

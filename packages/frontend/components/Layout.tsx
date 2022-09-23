@@ -10,7 +10,7 @@ const Layout: React.FC<ILayoutProps> = ({ children }) => {
     <div>
       <Header />
       <main className="flex-1">{children}</main>
-      {/* <Footer /> */}  
+      {/* <Footer /> */}
     </div>
   );
 };
