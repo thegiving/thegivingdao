@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Alert from "../components/Alert";
@@ -7,55 +7,68 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 import Home from ".";
-import { Input, TextArea, FileInput, Button } from "../components";
+import { useDropzone } from 'react-dropzone';
+import { Input, TextArea, Button } from "../components";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = await getToken({ req: context.req });
-  const address = token?.sub ?? null;
-
-  return {
-    props: {
-      address: address,
-      session: session
-    }
-  }
-}
 
 export default function CreateAccount({ address, session }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [organization, setOrganization] = useState("");
-  const [profilePicUrl, setProfilePicUrl] = useState<string>();
+  const [profilePic, setProfilePic] = useState<File>();
 
   const [success, setSuccess] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean | null>(null);
   const [accountId, setAccountId] = useState<string | null>(null);
 
-  const thumbnailRef = useRef<HTMLInputElement>(null)
+  const [files, setFiles] = useState([]);
 
-  if (!session) {
-    return <Home />
-  }
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: { 'image/*': [] },
+    onDrop: (acceptedFiles: any) => {
+      setProfilePic(acceptedFiles[0]),
+        setFiles(
+          acceptedFiles.map((file: any) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          )
+        );
+    },
+  });
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks
+    return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+  }, [files]);
+
+  const thumbs = files.map((file: any) => (
+    <div className="h-full w-full" key={file.name}>
+      <img
+        src={file.preview}
+        className="mx-auto max-h-full max-w-full object-contain"
+        alt="uploaded image"
+      //Revoke data uri after image is loaded
+      onLoad={() => { URL.revokeObjectURL(file.preview) }}
+      />
+    </div>
+  ));
+
+  async function handleSubmit(e: any) {
     e.preventDefault();
-
-    const ipfsData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      organization: organization,
-      profilePicUrl: profilePicUrl || "/2022_giving_logo_v01-01.png"
-    };
+    const data = new FormData();
+    data.append("image", profilePic);
+    data.append("firstName", firstName);
+    data.append("lastName", lastName);
+    data.append("email", email);
+    data.append("organization", organization);
 
     try {
-      const response = await fetch("/api/store-account-data", {
+      const response = await fetch("/api/ipfs-data", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ipfsData),
+        body: data,
       });
       if (response.status !== 200) {
         alert("Oops! Something went wrong. Please refresh and try again.");
@@ -99,6 +112,9 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
     }
   };
 
+  if (!session) {
+    return <Home />
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -177,12 +193,51 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
               />
-              <FileInput
-                label={'Upload Images and Videos related to the Fundraiser'}
-                id={'file-input'}
-                value={profilePicUrl}
-                onChange={(e) => setProfilePicUrl(e.target.value)}
-              />
+              <div className='w-full pb-10'>
+                <label
+                  htmlFor={'upload-image'}
+                  className="text-m mb-2 block font-medium text-gray-900"
+                >
+                  Upload Profile Pic
+                </label>
+                <div className="rounded-lg border bg-white p-4 sm:p-6">
+                  <div
+                    {...getRootProps({
+                      className: "flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100"
+                    })}
+                  >
+                    <input {...getInputProps()} />
+                    {thumbs.length > 0 ? (
+                      thumbs
+                    ) : (
+                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg
+                          aria-hidden="true"
+                          className="mb-3 h-10 w-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          ></path>
+                        </svg>
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="font-semibold">Click to upload</span> or drag
+                          and drop
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          SVG, PNG, JPG or GIF (MAX. 800x400px)
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="flex justify-end space-x-8">
                 <Button text={`Cancel`} buttonType={'Secondary'} onClick={e => window.history.back()} />
                 <Button text={`Create Accoumt`} buttonType={'Primary'} onClick={handleSubmit} />
@@ -201,4 +256,17 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
       </section>
     </div >
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+  const token = await getToken({ req: context.req });
+  const address = token?.sub ?? null;
+
+  return {
+    props: {
+      address: address,
+      session: session
+    }
+  }
 }

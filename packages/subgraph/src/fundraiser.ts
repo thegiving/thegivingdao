@@ -40,7 +40,7 @@ export function handleAccountCreated(event: AccountCreated): void {
         const lastName = file.get("lastName");
         const organization = file.get("organization");
         const email = file.get("email");
-        const profilePicUrl = file.get("profilePicUrl");
+        const profilePicUrl = file.get("image");
 
         if (firstName) {
           account.firstName = firstName.toString();

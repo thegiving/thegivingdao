@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
 import { ParsedUrlQuery } from "querystring";
+import { useEffect, useState } from "react";
 import Home from "..";
 
 import client from "../../apollo-client";
@@ -11,8 +12,54 @@ import client from "../../apollo-client";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function Account({ account, session }: Props) {
+  const [profile, setProfile] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [organization, setOrganization] = useState("")
+
+  useEffect(() => {
+    if (!account.profilePicURL) {
+      const fetchData = async () => {
+        const response = await getIPFSData(account.dataCID);
+        const responseJSON = await response.json();
+        const params = responseJSON.file
+        setters(params)
+      }
+      fetchData().catch(console.error);
+    } else {
+      setters(account)
+    }
+  }, [])
+
+  function setters(params: any) {
+    setProfile(params.image)
+    setFirstName(params.firstName)
+    setLastName(params.lastName)
+    setEmail(params.email)
+    setOrganization(params.organization)
+  }
+
   if (!session) {
     return <Home />
+  }
+
+  async function getIPFSData(cid: string) {
+    try {
+      const response = await fetch(`/api/ipfs-data?cid=${cid}`, {
+        method: "GET",
+      });
+      if (response.status !== 200) {
+        alert("Oops! Something went wrong. Please refresh and try again.");
+      } else {
+        console.log("Got it!");
+        return response;
+      }
+    } catch (error) {
+      alert(
+        `Oops! Something went wrong. Please refresh and try again. Error ${error}`
+      );
+    }
   }
 
   return (
@@ -21,15 +68,15 @@ export default function Account({ account, session }: Props) {
         <div className="relative flex flex-col flex-auto overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4" draggable="true">
           <div className="flex">
             <div className="w-full max-w-full px-1 mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
-              <img src={account.profilePicURL} alt="profile_image" className="w-50 h-25 shadow-soft-sm rounded-xl" />
+              <img src={profile} alt="profile_image" className="w-50 h-25 shadow-soft-sm rounded-xl" />
             </div>
             <div className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
                 <h5 className="mb-1">
-                  {`${account.firstName} ${account.lastName}`}
+                  {`${firstName} ${lastName}`}
                 </h5>
-                <p className="mb-0 font-semibold leading-normal text-size-sm">{account.organization}</p>
-                <p className="mb-0 font-semibold leading-normal text-size-sm">{account.email}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">{organization}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">{email}</p>
               </div>
             </div>
 
