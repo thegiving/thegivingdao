@@ -35,7 +35,7 @@ export function handleAccountCreated(event: AccountCreated): void {
     let metadata = ipfs.cat(event.params.accountDataCID + "/data.json");
     if (metadata) {
       const file = json.fromBytes(metadata).toObject();
-      if (file ) {
+      if (file) {
         const firstName = file.get("firstName");
         const lastName = file.get("lastName");
         const organization = file.get("organization");
@@ -60,7 +60,7 @@ export function handleAccountCreated(event: AccountCreated): void {
 
         if (profilePicUrl) {
           const imageURL =
-            "https://ipfs.io/ipfs/" + event.params.accountDataCID + profilePicUrl.toString();
+            "https://ipfs.io/ipfs/" + event.params.accountDataCID + '/' + profilePicUrl.toString();
           account.profilePicURL = imageURL;
         }
       }
@@ -111,7 +111,16 @@ export function handleAccountCreated(event: AccountCreated): void {
 
 export function handleCampaignCategoryCreated(
   event: CampaignCategoryCreated
-): void { }
+): void {
+  let category = CampaignCategory.load(event.params.categoryId.toHex())
+
+  if (!category) {
+    category = new CampaignCategory(event.params.categoryId.toHex());
+    category.categoryId = event.params.categoryId;
+    category.name = event.params.name.toString();
+    category.save()
+  }
+}
 
 export function handleCampaignClosed(event: CampaignClosed): void { }
 

@@ -8,6 +8,8 @@ interface InputInterface {
   options: Array<OptionsInterface>
   label: string
   id: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   width?: string
   optional?: boolean
 }
@@ -16,6 +18,8 @@ export default function Input({
   label,
   options,
   id,
+  value,
+  onChange,
   width = 'w-1/2',
   optional = false,
 }: InputInterface): JSX.Element {
@@ -31,6 +35,8 @@ export default function Input({
         </label>
         <select
           id={id}
+          value={value}
+          onChange={onChange}
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         >
           {options.map((option) => (

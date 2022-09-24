@@ -8,9 +8,9 @@ dataSources:
     name: Fundraiser
     network: mumbai
     source:
-      address: "0xa54b948BDc33b0CeC24eaCF0EF0451c3FF700bff"
+      address: "0xefBB17DDe02e1D364f945F6bEC11060e775e682c"
       abi: Fundraiser
-      startBlock: 28230482
+      startBlock: 28159677
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -30,7 +30,7 @@ dataSources:
           handler: handleAccountCreated
         - event: AccountUpdated(indexed bytes32,string,uint8,indexed address,uint256)
           handler: handleAccountUpdated
-        - event: CampaignCategoryCreated(indexed bytes32,indexed string,indexed address)
+        - event: CampaignCategoryCreated(indexed bytes32,string,indexed address)
           handler: handleCampaignCategoryCreated
         - event: CampaignClosed(indexed bytes32,uint8,indexed address,uint256)
           handler: handleCampaignClosed

@@ -1,6 +1,8 @@
 import DatePicker from "./Datepicker";
 interface DatePickerInterface {
   label: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   id?: string
   width?: string
   placeholderText?: string
@@ -10,6 +12,8 @@ interface DatePickerInterface {
 export default function Input({
   label,
   id,
+  value,
+  onChange,
   placeholderText,
   width = 'w-1/2',
   optional = false,
@@ -25,8 +29,8 @@ export default function Input({
           {!optional && ' *'}
         </label>
         <div className={`${width} flex space-x-4 `}>
-          <DatePicker id={'start-date'} placeholderText={'Select Start Date'} />
-          <DatePicker id={'start-end'} placeholderText={'Select End Date'} />
+          <DatePicker id={'start-date'} placeholderText={'Select Start Date'} value={value} onChange={onChange}/>
+          <DatePicker id={'start-end'} placeholderText={'Select End Date'} value={value} onChange={onChange}/>
         </div>
       </div>
     </>

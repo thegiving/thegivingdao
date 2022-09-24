@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Alert from "../components/Alert";
@@ -29,13 +29,13 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
     accept: { 'image/*': [] },
     onDrop: (acceptedFiles: any) => {
       setProfilePic(acceptedFiles[0]),
-        setFiles(
-          acceptedFiles.map((file: any) =>
-            Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            })
-          )
-        );
+      setFiles(
+        acceptedFiles.map((file: any) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
     },
   });
 
@@ -50,8 +50,8 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
         src={file.preview}
         className="mx-auto max-h-full max-w-full object-contain"
         alt="uploaded image"
-      //Revoke data uri after image is loaded
-      onLoad={() => { URL.revokeObjectURL(file.preview) }}
+        //Revoke data uri after image is loaded
+        onLoad={() => { URL.revokeObjectURL(file.preview) }}
       />
     </div>
   ));
@@ -240,7 +240,7 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
               </div>
               <div className="flex justify-end space-x-8">
                 <Button text={`Cancel`} buttonType={'Secondary'} onClick={e => window.history.back()} />
-                <Button text={`Create Accoumt`} buttonType={'Primary'} onClick={handleSubmit} />
+                <Button text={`Create Account`} buttonType={'Primary'} onClick={handleSubmit} />
               </div>
             </div>
           </form>
