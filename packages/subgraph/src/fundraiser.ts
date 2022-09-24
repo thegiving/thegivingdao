@@ -25,22 +25,44 @@ export function handleAccountCreated(event: AccountCreated): void {
     account = new Account(event.params.accountId.toHex());
     account.accountId = event.params.accountId;
     account.owner = event.params.owner;
-    account.kind = event.params.kind.toString();
+    account.kind = event.params.kind;
     account.timestamp = event.params.timestamp;
-    account.verificationState = "NotVerified";
+    account.verificationState = 0;
     account.totalCampaigns = integer.ZERO;
     account.totalDonations = BigInt.zero();
+    account.dataCID = event.params.accountDataCID;
 
     let metadata = ipfs.cat(event.params.accountDataCID + "/data.json");
-
     if (metadata) {
       const file = json.fromBytes(metadata).toObject();
+      if (file ) {
+        const firstName = file.get("firstName");
+        const lastName = file.get("lastName");
+        const organization = file.get("organization");
+        const email = file.get("email");
+        const profilePicUrl = file.get("image");
 
-      if (file) {
-        account.firstName = file.get("firstName")!.toString();
-        account.lastName = file.get("lastName")!.toString();
-        account.organization = file.get("organization")!.toString();
-        account.email = file.get("email")!.toString();
+        if (firstName) {
+          account.firstName = firstName.toString();
+        }
+
+        if (lastName) {
+          account.lastName = lastName.toString();
+        }
+
+        if (organization) {
+          account.organization = organization.toString();
+        }
+
+        if (email) {
+          account.email = email.toString();
+        }
+
+        if (profilePicUrl) {
+          const imageURL =
+            "https://ipfs.io/ipfs/" + event.params.accountDataCID + profilePicUrl.toString();
+          account.profilePicURL = imageURL;
+        }
       }
     }
     account.save();
@@ -89,26 +111,26 @@ export function handleAccountCreated(event: AccountCreated): void {
 
 export function handleCampaignCategoryCreated(
   event: CampaignCategoryCreated
-): void {}
+): void { }
 
-export function handleCampaignClosed(event: CampaignClosed): void {}
+export function handleCampaignClosed(event: CampaignClosed): void { }
 
-export function handleCampaignCreated(event: CampaignCreated): void {}
+export function handleCampaignCreated(event: CampaignCreated): void { }
 
-export function handleCampaignPublished(event: CampaignPublished): void {}
+export function handleCampaignPublished(event: CampaignPublished): void { }
 
-export function handleCampaignUpdated(event: CampaignUpdated): void {}
+export function handleCampaignUpdated(event: CampaignUpdated): void { }
 
-export function handleDistributedFunds(event: DistributedFunds): void {}
+export function handleDistributedFunds(event: DistributedFunds): void { }
 
-export function handleDonationMade(event: DonationMade): void {}
+export function handleDonationMade(event: DonationMade): void { }
 
-export function handlePaused(event: Paused): void {}
+export function handlePaused(event: Paused): void { }
 
-export function handleRoleAdminChanged(event: RoleAdminChanged): void {}
+export function handleRoleAdminChanged(event: RoleAdminChanged): void { }
 
-export function handleRoleGranted(event: RoleGranted): void {}
+export function handleRoleGranted(event: RoleGranted): void { }
 
-export function handleRoleRevoked(event: RoleRevoked): void {}
+export function handleRoleRevoked(event: RoleRevoked): void { }
 
-export function handleUnpaused(event: Unpaused): void {}
+export function handleUnpaused(event: Unpaused): void { }

@@ -60,13 +60,13 @@ export class Campaign extends Entity {
     this.set("account", Value.fromString(value));
   }
 
-  get kind(): string {
+  get kind(): i32 {
     let value = this.get("kind");
-    return value!.toString();
+    return value!.toI32();
   }
 
-  set kind(value: string) {
-    this.set("kind", Value.fromString(value));
+  set kind(value: i32) {
+    this.set("kind", Value.fromI32(value));
   }
 
   get category(): string {
@@ -131,13 +131,13 @@ export class Campaign extends Entity {
     this.set("amountPaid", Value.fromBigInt(value));
   }
 
-  get state(): string {
+  get state(): i32 {
     let value = this.get("state");
-    return value!.toString();
+    return value!.toI32();
   }
 
-  set state(value: string) {
-    this.set("state", Value.fromString(value));
+  set state(value: i32) {
+    this.set("state", Value.fromI32(value));
   }
 
   get createdAt(): BigInt {
@@ -293,22 +293,31 @@ export class Account extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
-  get kind(): string {
+  get kind(): i32 {
     let value = this.get("kind");
+    return value!.toI32();
+  }
+
+  set kind(value: i32) {
+    this.set("kind", Value.fromI32(value));
+  }
+
+  get dataCID(): string {
+    let value = this.get("dataCID");
     return value!.toString();
   }
 
-  set kind(value: string) {
-    this.set("kind", Value.fromString(value));
+  set dataCID(value: string) {
+    this.set("dataCID", Value.fromString(value));
   }
 
-  get verificationState(): string {
+  get verificationState(): i32 {
     let value = this.get("verificationState");
-    return value!.toString();
+    return value!.toI32();
   }
 
-  set verificationState(value: string) {
-    this.set("verificationState", Value.fromString(value));
+  set verificationState(value: i32) {
+    this.set("verificationState", Value.fromI32(value));
   }
 
   get campaigns(): Array<string> | null {
@@ -454,6 +463,23 @@ export class Account extends Entity {
       this.unset("email");
     } else {
       this.set("email", Value.fromString(<string>value));
+    }
+  }
+
+  get profilePicURL(): string | null {
+    let value = this.get("profilePicURL");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set profilePicURL(value: string | null) {
+    if (!value) {
+      this.unset("profilePicURL");
+    } else {
+      this.set("profilePicURL", Value.fromString(<string>value));
     }
   }
 }

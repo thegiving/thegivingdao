@@ -12,6 +12,19 @@ import { SiweMessage } from 'siwe'
 export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
   const providers = [
     CredentialsProvider({
+      credentials: {
+        message: {
+          label: 'Message',
+          placeholder: '0x0',
+          type: 'text',
+        },
+        signature: {
+          label: 'Signature',
+          placeholder: '0x0',
+          type: 'text',
+        },
+      },
+      name: 'Ethereum',
       async authorize(credentials) {
         try {
           const siwe = new SiweMessage(JSON.parse(credentials?.message || '{}'))
@@ -41,20 +54,7 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
         } catch (e) {
           return null
         }
-      },
-      credentials: {
-        message: {
-          label: 'Message',
-          placeholder: '0x0',
-          type: 'text',
-        },
-        signature: {
-          label: 'Signature',
-          placeholder: '0x0',
-          type: 'text',
-        },
-      },
-      name: 'Ethereum',
+      }
     }),
   ]
 

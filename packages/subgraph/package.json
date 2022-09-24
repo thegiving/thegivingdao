@@ -14,7 +14,9 @@
   "dependencies": {
     "@graphprotocol/graph-cli": "0.33.1",
     "@graphprotocol/graph-ts": "0.27.0",
-    "@protofire/subgraph-toolkit": "^0.1.2"
+    "@protofire/subgraph-toolkit": "^0.1.2",
+    "@typechain/ethers-v5": "^10.1.0",
+    "ethers": "^5.7.1"
   },
   "devDependencies": {
     "matchstick-as": "0.5.0"

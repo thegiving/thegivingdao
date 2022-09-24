@@ -44,6 +44,40 @@ export class AccountCreated__Params {
   }
 }
 
+export class AccountUpdated extends ethereum.Event {
+  get params(): AccountUpdated__Params {
+    return new AccountUpdated__Params(this);
+  }
+}
+
+export class AccountUpdated__Params {
+  _event: AccountUpdated;
+
+  constructor(event: AccountUpdated) {
+    this._event = event;
+  }
+
+  get accountId(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get dataCID(): string {
+    return this._event.parameters[1].value.toString();
+  }
+
+  get kind(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+
+  get owenr(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
 export class CampaignCategoryCreated extends ethereum.Event {
   get params(): CampaignCategoryCreated__Params {
     return new CampaignCategoryCreated__Params(this);
@@ -1816,6 +1850,40 @@ export class UnpauseCall__Outputs {
   _call: UnpauseCall;
 
   constructor(call: UnpauseCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateAccountCall extends ethereum.Call {
+  get inputs(): UpdateAccountCall__Inputs {
+    return new UpdateAccountCall__Inputs(this);
+  }
+
+  get outputs(): UpdateAccountCall__Outputs {
+    return new UpdateAccountCall__Outputs(this);
+  }
+}
+
+export class UpdateAccountCall__Inputs {
+  _call: UpdateAccountCall;
+
+  constructor(call: UpdateAccountCall) {
+    this._call = call;
+  }
+
+  get dataCID(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+
+  get kind(): i32 {
+    return this._call.inputValues[1].value.toI32();
+  }
+}
+
+export class UpdateAccountCall__Outputs {
+  _call: UpdateAccountCall;
+
+  constructor(call: UpdateAccountCall) {
     this._call = call;
   }
 }
