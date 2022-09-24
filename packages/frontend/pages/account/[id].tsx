@@ -33,7 +33,7 @@ export default function Account({ account, session }: Props) {
   }, [])
 
   function setters(params: any) {
-    setProfile(params.image)
+    setProfile(params.profilePicURL || params.image)
     setFirstName(params.firstName)
     setLastName(params.lastName)
     setEmail(params.email)

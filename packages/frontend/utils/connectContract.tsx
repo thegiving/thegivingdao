@@ -3,7 +3,7 @@ import abiJSON from "../contracts/Fundraiser.json";
 import { ethers  } from "ethers";
 
 function connectContract() {
-    const contractAddress = "0xa54b948BDc33b0CeC24eaCF0EF0451c3FF700bff";
+    const contractAddress = "0xefBB17DDe02e1D364f945F6bEC11060e775e682c";
     const contractABI = abiJSON;
     let fundraiser;
     try {

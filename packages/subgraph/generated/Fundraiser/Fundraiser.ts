@@ -95,8 +95,8 @@ export class CampaignCategoryCreated__Params {
     return this._event.parameters[0].value.toBytes();
   }
 
-  get name(): Bytes {
-    return this._event.parameters[1].value.toBytes();
+  get name(): string {
+    return this._event.parameters[1].value.toString();
   }
 
   get caller(): Address {

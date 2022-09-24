@@ -1,4 +1,6 @@
 interface DatePickerInterface {
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string
   id: string
   placeholderText: string
@@ -13,6 +15,8 @@ const get_today = (id: string) => {
 export default function DatePicker({
   label,
   id,
+  value,
+  onChange,
   placeholderText,
 }: DatePickerInterface): JSX.Element {
   return (
@@ -35,7 +39,8 @@ export default function DatePicker({
         </div>
         <input
           type="date"
-          value={get_today(id)}
+          value={value}
+          onChange={onChange}
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-black placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           placeholder={placeholderText}
         />

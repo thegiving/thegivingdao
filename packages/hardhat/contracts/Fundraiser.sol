@@ -132,7 +132,7 @@ contract Fundraiser is AccessControlEnumerable, Pausable {
   event CampaignUpdated(Campaign campaign, uint256 updatedAt);
   event AccountCreated(bytes32 indexed accountId, string accountDataCID, AccountKind kind, address indexed owner, uint256 timestamp);
   event AccountUpdated(bytes32 indexed accountId, string dataCID, AccountKind kind, address indexed owenr, uint256 timestamp);
-  event CampaignCategoryCreated(bytes32 indexed categoryId, string indexed name, address indexed caller);
+  event CampaignCategoryCreated(bytes32 indexed categoryId, string name, address indexed caller);
   event DonationMade(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
   event DistributedFunds(bytes32 indexed campaignId, uint256 amount, address indexed caller, uint256 timestamp);
   event CampaignClosed(bytes32 indexed campaignId, CampaignState state, address indexed caller, uint256 timestamp);
