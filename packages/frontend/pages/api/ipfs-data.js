@@ -1,4 +1,5 @@
 import { Web3Storage, File, getFilesFromPath } from "web3.storage";
+const path = require('path');
 
 export const config = {
   api: {
@@ -16,22 +17,10 @@ export const FormidableError = formidable.errors.FormidableError;
 
 export const parseForm = async (req) => {
   return await new Promise(async (resolve, reject) => {
-    const uploadDir = join(
+    const uploadDir = path.resolve(
       process.cwd(),
-      `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`
+      `public/uploads/`
     );
-
-    try {
-      await stat(uploadDir);
-    } catch (e) {
-      if (e.code === "ENOENT") {
-        await mkdir(uploadDir, { recursive: true });
-      } else {
-        console.error(e);
-        reject(e);
-        return;
-      }
-    }
 
     let filename = ""; //  To avoid duplicate upload
     const form = formidable({
@@ -101,9 +90,9 @@ async function makeFileObjects(body) {
 
   const buffer = Buffer.from(JSON.stringify(body));
 
-  const uploadDir = join(
+  const uploadDir = path.resolve(
     process.cwd(),
-    `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}/${image}`
+    `public/uploads/${image}`
   );
   const files = await getFilesFromPath(uploadDir);
 

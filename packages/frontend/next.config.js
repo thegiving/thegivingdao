@@ -4,7 +4,9 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     externalDir: true,
-    outputFileTracing: true
+  },
+  images: {
+    domains: ["images.unsplash.com", "ipfs.io"],
   },
 }
 
