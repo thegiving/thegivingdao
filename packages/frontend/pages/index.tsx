@@ -2,6 +2,7 @@ import Image from "next/image";
 import Button from '../components/Button';
 import type { NextPage } from 'next'
 import FundraiserButton from "../components/FundraiserButton";
+import router from "next/router";
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
           </p>
           <div className='flex space-x-8 justify-start'>
             <FundraiserButton />
-            <Button text={`Make a Donation`} buttonType={'Primary'} />
+            <Button text={`Make a Donation`} buttonType={'Primary'} onClick={e => router.push('/fundraisers')} />
           </div>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
