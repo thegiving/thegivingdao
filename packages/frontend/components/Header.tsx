@@ -30,17 +30,19 @@ export default function Header() {
                 </Disclosure.Button>
 
                 <div className="container-fluid">
-                  <a className="flex items-center text-gray-900 hover:text-gray-900 focus:text-gray-900 lg:mt-0 mr-1" href="/">
-                    <Image
-                      className="mr-2 font-extrabold"
-                      src={"/2022_giving_logo_v01-01.png"}
-                      alt="The Giving Dao"
-                      width={75}
-                      height={75}
-                      key={"header-logo"}
-                    />
-                    <span className='font-bold text-lg'>TheGivingDao</span>
-                  </a>
+                  <Link key='logo' href="/">
+                    <a className="flex items-center text-gray-900 hover:text-gray-900 focus:text-gray-900 lg:mt-0 mr-1">
+                      <Image
+                        className="mr-2 font-extrabold"
+                        src={"/2022_giving_logo_v01-01.png"}
+                        alt="The Giving Dao"
+                        width={75}
+                        height={75}
+                        key={"header-logo"}
+                      />
+                      <span className='font-bold text-lg'>TheGivingDao</span>
+                    </a>
+                  </Link>
                 </div>
                 <div className="hidden lg:flex lg:gap-[4.5rem]">
                   {navigation.map((item) => (
