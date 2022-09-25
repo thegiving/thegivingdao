@@ -36,7 +36,7 @@ export const parseForm = async (req) => {
     let filename = ""; //  To avoid duplicate upload
     const form = formidable({
       maxFiles: 2,
-      maxFileSize: 2048 * 2048, // 2mb
+    //   maxFileSize: 2048 * 2048, // 2mb
       uploadDir,
       filename: (_name, _ext, part) => {
         if (filename !== "") {
