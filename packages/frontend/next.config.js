@@ -4,12 +4,8 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     externalDir: true,
+    outputFileTracing: true
   },
-  functions: {
-    "api/ipfs-data.js": {
-        includeFiles: "uploads/**"
-    }
-  }
 }
 
 module.exports = nextConfig

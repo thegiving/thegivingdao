@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "pages/api/ipfs-data.js": {
+      "includeFiles": "./uploads/**"
+    }
+  }
+}
