@@ -83,7 +83,7 @@ export default function Fundraisers({campaigns, address, session}: Props) {
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-4xl">
           Fundraisers
         </h1>
-        <div className={'flex max-w-screen-xl'}>
+        <div className={'flex flex-wrap max-w-screen-xl'}>
           {campaigns.map((fundraiser) => (
             <Card
               id={fundraiser.id}
