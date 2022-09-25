@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0xefBB17DDe02e1D364f945F6bEC11060e775e682c"
       abi: Fundraiser
-      startBlock: 28159677
+      startBlock: 28275316
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
