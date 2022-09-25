@@ -2,8 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: { 
+  experimental: {
     externalDir: true,
+  },
+  functions: {
+    "api/ipfs-data.js": {
+        includeFiles: "uploads/**"
+    }
   }
 }
 
