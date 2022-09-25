@@ -21,12 +21,12 @@ import { useDropzone } from 'react-dropzone';
 import connectContract from '../utils/connectContract';
 import Head from 'next/head';
 import Link from 'next/link';
-import { start } from 'repl';
+import saveToIPFS from '../utils/saveToIPFS';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 function CreateFundraiser({ accounts, session, address }: Props) {
-  const [imageURL, setImageURL] = useState("")
+  const [imageURL, setImageURL] = useState<File>()
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [startAt, setStartAt] = useState("")
@@ -58,6 +58,8 @@ function CreateFundraiser({ accounts, session, address }: Props) {
   });
 
   useEffect(() => {
+    console.log(address)
+
     if (!campaignCategoriesLoading) {
       const ccMap = campaignCategories.campaignCategories.map((category: any) => ({
         key: category.categoryId,
@@ -84,33 +86,24 @@ function CreateFundraiser({ accounts, session, address }: Props) {
   ));
 
   async function handleSubmit(e: any) {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("image", imageURL);
-    data.append("name", name);
-    data.append("description", description);
-    data.append("startAt", startAt)
-    data.append("endAt", endAt);
-    data.append("goal", goal);
-    data.append("category", category)
+    const ipfsData = {
+      "image": imageURL.name,
+      "name": name,
+      "description": description,
+      "startAt": startAt,
+      "endAt": endAt,
+      "goal": goal,
+      "category": category
+    }
 
     try {
-      const response = await fetch("/api/ipfs-data", {
-        method: "POST",
-        body: data,
-      });
-      if (response.status !== 200) {
-        alert("Oops! Something went wrong. Please refresh and try again.");
-      } else {
-        console.log("Form successfully submitted!");
-        let responseJSON = await response.json();
-        console.log('cid ' + responseJSON.cid)
-        createCampaign(responseJSON.cid);
+      const cid = await saveToIPFS(files[0], JSON.stringify(ipfsData))
+      if (cid) {
+        console.log(cid)
+        await createCampaign(cid);
       }
     } catch (error) {
-      alert(
-        `Oops! Something went wrong. Please refresh and try again. Error ${error}`
-      );
+      alert(`Oops! Something went wrong. Error: ${error}`)
     }
   }
 

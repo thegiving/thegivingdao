@@ -41,6 +41,7 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
   });
 
   useEffect(() => {
+    console.log(address)
     // Make sure to revoke the data uris to avoid memory leaks
     return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
   }, [files]);
@@ -59,14 +60,9 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    // const data = new FormData();
-    // data.append("image", profilePic);
-    // data.append("firstName", firstName);
-    // data.append("lastName", lastName);
-    // data.append("email", email);
-    // data.append("organization", organization);
+
     const ipfsData = {
-      "image": files[0].name,
+      "image": profilePic.name,
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
@@ -82,25 +78,6 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
     } catch(error) {
       alert(`Oops! Something went wrong. Error: ${error}`)
     }
-
-
-    // try {
-    //   const response = await fetch("/api/ipfs-data", {
-    //     method: "POST",
-    //     body: data,
-    //   });
-    //   if (response.status !== 200) {
-    //     alert("Oops! Something went wrong. Please refresh and try again.");
-    //   } else {
-    //     console.log("Form successfully submitted!");
-    //     let responseJSON = await response.json();
-    //     await createAccount(responseJSON.cid);
-    //   }
-    // } catch (error) {
-    //   alert(
-    //     `Oops! Something went wrong. Please refresh and try again. Error ${error}`
-    //   );
-    // }
   }
 
   const createAccount = async (cid: string) => {

@@ -8,7 +8,7 @@ const saveToIPFS = async (image: File, fields: string) => {
   let files = [image];
   files.push(new File([buffer], "data.json"));
 
-  const cid = storeFiles(files)
+  const cid = await storeFiles(files)
   return cid;
 };
 
