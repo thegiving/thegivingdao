@@ -23,7 +23,6 @@ packages/subgraph/config/config.json
 .pnp.loader.mjs
 .pnp.js
 
-public/uploads/**
 # testing
 coverage
 

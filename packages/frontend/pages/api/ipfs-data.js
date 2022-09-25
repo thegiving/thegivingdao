@@ -19,13 +19,13 @@ export const parseForm = async (req) => {
   return await new Promise(async (resolve, reject) => {
     const uploadDir = path.resolve(
       process.cwd(),
-      `public/uploads/`
+      `uploads/`
     );
 
     let filename = ""; //  To avoid duplicate upload
     const form = formidable({
       maxFiles: 2,
-    //   maxFileSize: 2048 * 2048, // 2mb
+      maxFileSize: 2048 * 2048, // 2mb
       uploadDir,
       filename: (_name, _ext, part) => {
         if (filename !== "") {
@@ -92,7 +92,7 @@ async function makeFileObjects(body) {
 
   const uploadDir = path.resolve(
     process.cwd(),
-    `public/uploads/${image}`
+    `uploads/${image}`
   );
   const files = await getFilesFromPath(uploadDir);
 
