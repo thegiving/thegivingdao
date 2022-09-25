@@ -87,6 +87,7 @@ export default function Fundraisers({campaigns, address, session}: Props) {
           {campaigns.map((fundraiser) => (
             <Card
               id={fundraiser.id}
+              key={fundraiser.id}
               title={fundraiser.name}
               owner={`${fundraiser.account.firstName} ${fundraiser.account.lastName}`}
               description={fundraiser.description}
