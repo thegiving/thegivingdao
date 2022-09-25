@@ -9,6 +9,7 @@ import { getSession } from "next-auth/react";
 import Home from ".";
 import { useDropzone } from 'react-dropzone';
 import { Input, TextArea, Button } from "../components";
+import saveToIPFS from "../utils/saveToIPFS";
 
 
 export default function CreateAccount({ address, session }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -29,13 +30,13 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
     accept: { 'image/*': [] },
     onDrop: (acceptedFiles: any) => {
       setProfilePic(acceptedFiles[0]),
-      setFiles(
-        acceptedFiles.map((file: any) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
+        setFiles(
+          acceptedFiles.map((file: any) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          )
+        );
     },
   });
 
@@ -58,30 +59,48 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const data = new FormData();
-    data.append("image", profilePic);
-    data.append("firstName", firstName);
-    data.append("lastName", lastName);
-    data.append("email", email);
-    data.append("organization", organization);
+    // const data = new FormData();
+    // data.append("image", profilePic);
+    // data.append("firstName", firstName);
+    // data.append("lastName", lastName);
+    // data.append("email", email);
+    // data.append("organization", organization);
+    const ipfsData = {
+      "image": files[0].name,
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "organization": organization
+    }
 
     try {
-      const response = await fetch("/api/ipfs-data", {
-        method: "POST",
-        body: data,
-      });
-      if (response.status !== 200) {
-        alert("Oops! Something went wrong. Please refresh and try again.");
-      } else {
-        console.log("Form successfully submitted!");
-        let responseJSON = await response.json();
-        await createAccount(responseJSON.cid);
+      const cid = await saveToIPFS(files[0], JSON.stringify(ipfsData))
+      if (cid) {
+        console.log(cid)
+        await createAccount(cid);
       }
-    } catch (error) {
-      alert(
-        `Oops! Something went wrong. Please refresh and try again. Error ${error}`
-      );
+    } catch(error) {
+      alert(`Oops! Something went wrong. Error: ${error}`)
     }
+
+
+    // try {
+    //   const response = await fetch("/api/ipfs-data", {
+    //     method: "POST",
+    //     body: data,
+    //   });
+    //   if (response.status !== 200) {
+    //     alert("Oops! Something went wrong. Please refresh and try again.");
+    //   } else {
+    //     console.log("Form successfully submitted!");
+    //     let responseJSON = await response.json();
+    //     await createAccount(responseJSON.cid);
+    //   }
+    // } catch (error) {
+    //   alert(
+    //     `Oops! Something went wrong. Please refresh and try again. Error ${error}`
+    //   );
+    // }
   }
 
   const createAccount = async (cid: string) => {

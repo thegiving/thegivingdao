@@ -143,5 +143,5 @@ async function getFile(cid) {
   return fileContent;
 }
 function makeStorageClient() {
-  return new Web3Storage({ token: process.env.WEB3STORAGE_API_TOKEN });
+  return new Web3Storage({ token: process.env.NEXT_PUBLIC_WEB3STORAGE_API_TOKEN });
 }
