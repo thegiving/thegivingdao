@@ -75,11 +75,12 @@ export default function Account({ account, session }: Props) {
                 <h5 className="mb-1">
                   {`${firstName} ${lastName}`}
                 </h5>
-                <p className="mb-0 font-semibold leading-normal text-size-sm">{organization}</p>
-                <p className="mb-0 font-semibold leading-normal text-size-sm">{email}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">Organziation: {organization}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">Email: {email}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">Total Campaigns: {account.totalCampaigns}</p>
+                <p className="mb-0 font-semibold leading-normal text-size-sm">Total Donations: {account.totalDonations}</p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -98,6 +99,9 @@ const ACCOUNT_QUERY = gql`
       email
       organization
       profilePicURL
+      totalCampaigns
+      totalDonations
+      campaigns
     }
   }
 `
