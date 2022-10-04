@@ -119,8 +119,7 @@ async function getData(req, res) {
     const json = JSON.parse(file)
     const {image, ...params } = json;
     const imageURL = "https://ipfs.io/ipfs/" + cid + '/' + image.toString();
-    const newJson = {image: imageURL, ...params}
-    return res.status(200).json({ success: true, file: newJson});;
+    return res.status(200).json({ success: true, file: {imageURL, ...params}});;
   } catch (err) {
     return res.status(500).json({ error: "Error getting object", success: false });
   }

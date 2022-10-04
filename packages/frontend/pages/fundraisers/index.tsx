@@ -1,103 +1,43 @@
 import { gql } from '@apollo/client';
-import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import { getToken } from 'next-auth/jwt';
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { ParsedUrlQuery } from 'querystring';
-import Home from '..';
 import client from '../../apollo-client';
-import Card from '../../components/Card'
+import Card from '../../components/Card';
+import { Campaign } from '../../models/subgraph-entities/campaign';
 import formatTimestamp from '../../utils/formatTimestamp';
-const fundraisers = [
-  {
-    id: 1,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 1,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 3,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 1,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    fundraiserTill: '2022-12-12',
-    image: '/placeholder-1.jpg',
-  },
-  {
-    id: 3,
-    title: 'Donation for Kids',
-    goal: 1500,
-    fundsRaised: 100,
-    image: '/placeholder-1.jpg',
-  },
-]
+import { InferGetServerSidePropsType } from 'next';
+import type { TCampaign } from '../../models/subgraph-entities/campaign';
+
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-
-
-export default function Fundraisers({campaigns, address, session}: Props) {
-  const router = useRouter();
-
-  if (!session) {
-    return <Home />
-  }
-
-
+export default function Fundraisers({ campaigns }: Props) {
   return (
     <>
-      <div className="mx-auto grid max-w-screen-xl py-8 px-4 pt-16 text-primary">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-4xl">
+      <div className="mx-auto max-w-screen-xl py-8 px-5 pt-16 text-primary">
+        <h1 className="mb-7 text-4xl font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-4xl">
           Fundraisers
         </h1>
-        <div className={'flex flex-wrap max-w-screen-xl'}>
-          {campaigns.map((fundraiser) => (
-            <Card
-              id={fundraiser.id}
-              key={fundraiser.id}
-              title={fundraiser.name}
-              owner={`${fundraiser.account.firstName} ${fundraiser.account.lastName}`}
-              description={fundraiser.description}
-              goal={fundraiser.goal}
-              fundsRaised={fundraiser.donated}
-              endAt={formatTimestamp(fundraiser.endAt)}
-              image={fundraiser.imageURL}
-            />
-          ))}
-        </div>
+        {!campaigns && <p>No fundraisers found</p>}
+        {campaigns && (
+          <ul
+            role="list"
+            className="py-5 grid gap-y-6 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3"
+          >
+            {campaigns.map((fundraiser) => (
+              <li key={fundraiser.id}>
+                <Card
+                  id={fundraiser.id}
+                  name={fundraiser.name}
+                  accountName={fundraiser.account.firstName && fundraiser.account.lastName ? `${fundraiser.account.firstName} ${fundraiser.account.lastName}` : null}
+                  accountId={fundraiser.account.id}
+                  description={fundraiser.description}
+                  goal={fundraiser.goal}
+                  raised={fundraiser.donated}
+                  endAt={formatTimestamp(fundraiser.endAt)}
+                  image={fundraiser.imageURL}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   )
@@ -112,6 +52,7 @@ const CAMPAIGN_QUERY = gql`
       goal
       donated
       imageURL
+      dataCID
       startAt
       endAt
       category {
@@ -123,26 +64,36 @@ const CAMPAIGN_QUERY = gql`
         firstName
         lastName
         organization
+        dataCID
       }
     }
   }
 `
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = await getToken({ req: context.req });
-  const address = token?.sub ?? null;
+export async function getServerSideProps({req, res}) {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=14400, stale-while-revalidate=86400'
+  )
 
   const { data } = await client.query({
     query: CAMPAIGN_QUERY
   });
 
+  const campaigns = data.campaigns.map(async (c: TCampaign) => {
+    const serialized = await serializeCampaign(c);
+    return serialized
+  })
+  const allCampaigns = await Promise.all(campaigns);
   return {
     props: {
-      campaigns: data.campaigns,
-      session: session,
-      address: address
+      campaigns: allCampaigns
     },
   };
 }
 
+async function serializeCampaign(attributes: TCampaign) {
+  const campaign = new Campaign(attributes);
+  const json = await campaign.serialize()
+  return json;
+}
