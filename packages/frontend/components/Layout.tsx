@@ -9,7 +9,7 @@ const Layout: React.FC<ILayoutProps> = ({ children }) => {
   return (
     <div>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-off_white">{children}</main>
       {/* <Footer /> */}
     </div>
   );

@@ -38,7 +38,7 @@ export default function Alert({ alertType, alertBody, triggerAlert, color }: IPr
               <ExclamationCircleIcon className="h-5 w-5" />
             )}
           </div>
-          <div className="ml-2">
+          <div className="ml-2 mb-5">
             <p className="text-sm font-medium text-gray-900">{alertBody}</p>
           </div>
           <div className="ml-auto pl-3">

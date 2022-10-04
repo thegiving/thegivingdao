@@ -1,89 +1,68 @@
-interface CardInterface {
+import Link from "next/link"
+import Image from "next/image";
+import Button from "./Button";
+import router from "next/router";
+
+interface ICard {
   id: string
-  title: string
   goal: number
-  owner: string
-  fundsRaised: number
-  image: string
-  description?: string
+  accountId?: string
+  raised: number
+  accountName?: string
+  name?: string
+  image?: string
   endAt?: string
+  description?: string
 }
 
 export default function Card({
   id,
-  owner,
-  title,
+  accountName,
+  accountId,
+  name,
   goal,
-  fundsRaised,
-  endAt,
+  raised,
   image,
-  description
-}: CardInterface): JSX.Element {
+  description,
+}: ICard): JSX.Element {
   return (
-    <div key={id} className={`w-1/3 transition ease-in ease-out hover:scale-105 duration-5`}>
-      <div className="max-w-sm rounded-lg border border-gray-200 bg-white shadow-md">
-        <a href={`/fundraisers/${id}`}>
-          <img className="rounded-t-lg max-h-screen" src={image} />
-        </a>
-        <svg className={'sr-only'}>{title}</svg>
-        <div className="p-3">
-          <h1 className="mb-0.5 -mt-1.5 text-2xl tracking-tight text-black">
-            {title}
-          </h1>
-          <h5 className="mb-2 text-sm tracking-tight text-secondary">
-            {owner}
-          </h5>
-
-          <p className="mb-6 text-md tracking-tight text-gray-500">
-            {description}
-          </p>
-          <div className={'flex justify-between'}>
-            <p className="mb-1 text-sm text-gray-700 text-gray-400 ">
-              Goal
-            </p>
-            <p className=" mb-1 text-sm text-gray-700 text-gray-400 ">
-              ${goal}
-            </p>
+    <div className={"group bg-white max-w-s relative shadow-md border rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-lightblue-400 transition ease-in ease-out hover:scale-105 duration-5"}>
+      <div className="w-full rounded-t-lg bg-gray-100 aspect-h-7 aspect-w-9  overflow-hidden relative group-hover:opacity-75">
+        {image && <Image src={image} priority={true} alt="fundraiser image" layout="fill" />}
+        <Link href={`/fundraisers/${id}`}>
+          <a></a>
+        </Link>
+      </div>
+      <div className="p-5 block">
+        <h1 className="text-base font-medium text-gray-900 mb-0.5 -mt-1.5 lg:text-lg">
+          {name}
+        </h1>
+        <p className="text-sm text-gray-400 hover:underline">
+          <Link href={`/account/${accountId}`}>
+            <a className="hover:underline">
+              {accountName}
+            </a>
+          </Link>
+        </p>
+        <p className="pb-3 pt-3 lg:text-md text-base text-gray-600">
+          {description}
+        </p>
+        <hr className="mb-2" />
+        <div className="grid grid-cols-3 pb-1 pt-2 text-md">
+          <div className="col-span-2">
+            <span className="font-bold">${raised} raised of</span>
+            <span className="pl-1">${goal}</span>
           </div>
 
-          <div className={'flex justify-between'}>
-            <p className="mb-1 text-sm text-gray-700 text-gray-400 ">
-              Funds Raised
-            </p>
-            <p className=" mb-1 text-sm text-gray-700 text-gray-400 ">
-              ${fundsRaised}
-            </p>
-          </div>
-
-          <div className={'flex justify-between'}>
-            <p className="text-sm text-gray-700 text-gray-400 ">
-              Ends At
-            </p>
-            <p className="text-sm text-gray-700 text-gray-400 ">
-              {endAt}
-              {!endAt && '-'}
-            </p>
-          </div>
-
-          {/*<a*/}
-          {/*  href="#"*/}
-          {/*  className="inline-flex items-center rounded-lg bg-blue-700 py-2 px-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"*/}
-          {/*>*/}
-          {/*  Read more*/}
-          {/*  <svg*/}
-          {/*    aria-hidden="true"*/}
-          {/*    className="ml-2 -mr-1 h-4 w-4"*/}
-          {/*    fill="currentColor"*/}
-          {/*    viewBox="0 0 20 20"*/}
-          {/*    xmlns="http://www.w3.org/2000/svg"*/}
-          {/*  >*/}
-          {/*    <path*/}
-          {/*      fillRule="evenodd"*/}
-          {/*      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"*/}
-          {/*      clipRule="evenodd"*/}
-          {/*    ></path>*/}
-          {/*  </svg>*/}
-          {/*</a>*/}
+          <span className="justify-self-center ">
+            <button
+              type="button"
+              onClick={(e) => router.push(`/fundraisers/${id}`)}
+              className="transition ease hover:scale-105 duration-75 hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 items-center justify-center rounded-lg bg-primary py-1 px-5 text-center text-sm font-normal text-white hover:shadow-lg focus:ring-4"
+            >
+              Donate
+            </button>
+          </span>
         </div>
       </div>
     </div>

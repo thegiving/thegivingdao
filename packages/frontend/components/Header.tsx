@@ -18,7 +18,7 @@ export default function Header() {
       <Disclosure key={"nav"} as="nav">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-50 flex justify-between py-4">
+            <div className="bg-off_white max-w-12xl px-4 sm:px-6 lg:px-28 relative z-50 flex justify-between py-4">
               <div className="container-fluid relative z-10 flex items-center lg:gap-16">
                 <Disclosure.Button key={"mobile"} className="lg:hidden md:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
@@ -40,7 +40,7 @@ export default function Header() {
                         height={75}
                         key={"header-logo"}
                       />
-                      <span className='font-bold text-lg'>TheGivingDao</span>
+                      <span className='font-bold text-gray-900 text-lg'>TheGivingDao</span>
                     </a>
                   </Link>
                 </div>
@@ -49,7 +49,7 @@ export default function Header() {
                     <Link key={item.name} href={item.href}>
                       <a
                         key={item.name}
-                        className="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-lg transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"
+                        className="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-md font-semibold text-gray-800 transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
