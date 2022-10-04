@@ -69,6 +69,15 @@ export class Campaign extends Entity {
     this.set("kind", Value.fromI32(value));
   }
 
+  get dataCID(): string {
+    let value = this.get("dataCID");
+    return value!.toString();
+  }
+
+  set dataCID(value: string) {
+    this.set("dataCID", Value.fromString(value));
+  }
+
   get category(): string {
     let value = this.get("category");
     return value!.toString();
