@@ -15,11 +15,11 @@ export const saveToIPFS = async (image: File, fields: string) => {
 export async function getIPFSData(cid: string) {
   try {
     const file = await getFile(cid);
-    // console.log("got fresh copy of file " + JSON.stringify(file))
+    console.log("got fresh copy of file " + JSON.stringify(file))
     const json = JSON.parse(file)
-    const {image, ...params } = json;
+    const { image, ...params } = json;
     const imageURL = "https://ipfs.io/ipfs/" + cid + '/' + image.toString();
-    return { file: {image: imageURL, ...params} };
+    return { file: { image: imageURL, ...params } };
   } catch (err) {
     `Oops! Something went wrong. Please refresh and try again. Error ${err}`
     throw err;

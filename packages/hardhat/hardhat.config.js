@@ -30,7 +30,7 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
   solidity: {
     compilers: [
@@ -42,7 +42,7 @@ module.exports = {
             runs: 200,
           },
         },
-      }
+      },
     ],
   },
   abiExporter: {
@@ -53,16 +53,13 @@ module.exports = {
     only: ["Fundraiser"],
     spacing: 2,
     pretty: false,
-    fromat: "json"
+    fromat: "json",
   },
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
     },
-    controller: {
-      default: 1,
-    }
-  }
+  },
 };
 
 task("accounts", "Prints the list of accounts", async (_, { ethers }) => {

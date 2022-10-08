@@ -1,17 +1,28 @@
 {
-   "editor.tabSize": 4,
-   "editor.insertSpaces": true,
-   "editor.detectIndentation": false,
-   "solidity.packageDefaultDependenciesDirectory": "/hardhat/node_modules/",
-   "solidity-va.test.defaultUnittestTemplate": "hardhat",
-   "explorerExclude.backup": null,
-   "eslint.workingDirectories": [
-      { "directory": "packages/hardhat", "changeProcessCWD": true },
-      { "directory": "packages/frontend", "changeProcessCWD": true },
-      { "directory": "packages/subgraph", "changeProcessCWD": true },
-   ],
-   "search.exclude": {
-      "**/yarn-error.log": true,
-      "**/yarn.lock": true
-   }
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.insertSpaces": true,
+
+  // improve monorepo handling
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+
+  "[solidity]": {
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+
+  "solidity.packageDefaultDependenciesContractsDirectory": "",
+  "solidity.packageDefaultDependenciesDirectory": "packages/hardhat/node_modules",
+
+  "search.exclude": {
+    "packages/hardhat/node_modules": true,
+    "**/yarn-error.log": true,
+    "**/yarn.lock": true
+  }
 }
