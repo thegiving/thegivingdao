@@ -23,6 +23,7 @@ export default function Fundraiser({ campaign }: Props) {
       throw new Error("There was an error getting campaign metadata")
     }
     const json = await response.json();
+    console.log(json.file)
     return json.file;
   }
 

@@ -2,6 +2,7 @@ import { BigInt, ipfs, Address, json } from "@graphprotocol/graph-ts"
 import {
   Fundraiser,
   AccountCreated,
+  AccountUpdated,
   CampaignCategoryCreated,
   CampaignClosed,
   CampaignCreated,
@@ -69,6 +70,51 @@ export function handleAccountCreated(event: AccountCreated): void {
   }
 }
 
+export function handleAccountUpdated(event: AccountUpdated): void {
+  let account = Account.load(event.params.accountId.toHex())
+
+  if (account !== null) {
+    account.dataCID = event.params.dataCID;
+    account.kind = event.params.kind;
+
+    let metadata = ipfs.cat(event.params.dataCID + "/data.json");
+
+    if (metadata) {
+      const file = json.fromBytes(metadata).toObject();
+      if (file) {
+        const firstName = file.get("firstName");
+        const lastName = file.get("lastName");
+        const organization = file.get("organization");
+        const email = file.get("email");
+        const profilePicUrl = file.get("image");
+
+        if (firstName) {
+          account.firstName = firstName.toString();
+        }
+
+        if (lastName) {
+          account.lastName = lastName.toString();
+        }
+
+        if (organization) {
+          account.organization = organization.toString();
+        }
+
+        if (email) {
+          account.email = email.toString();
+        }
+
+        if (profilePicUrl) {
+          const imageURL =
+            "https://ipfs.io/ipfs/" + event.params.dataCID + '/' + profilePicUrl.toString();
+          account.profilePicURL = imageURL;
+        }
+      }
+    }
+    account.save()
+  }
+}
+
 export function handleCampaignCategoryCreated(
   event: CampaignCategoryCreated
 ): void {
@@ -87,7 +133,7 @@ export function handleCampaignCreated(event: CampaignCreated): void {
   let account = Account.load(event.params.campaign.account.id.toHex());
   let category = CampaignCategory.load(event.params.campaign.categoryId.toHex());
 
-  if (!campaign && category != null && account != null) {
+  if (!campaign && category !== null && account !== null) {
     campaign = new Campaign(event.params.campaign.id.toHex());
     campaign.campaignId = event.params.campaign.id;
     campaign.dataCID = event.params.campaign.dataCID;

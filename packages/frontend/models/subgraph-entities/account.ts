@@ -16,6 +16,7 @@ export type TAccount = {
   organization?: string
   email?: string
   profilePicURL?: string
+  imageURL?: string
 }
 
 export type TMetadata = Pick<TAccount, 'firstName' | 'lastName' | 'organization' | 'email' | 'profilePicURL'>;

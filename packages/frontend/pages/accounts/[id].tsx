@@ -23,6 +23,7 @@ export default function Account({ account, session }: Props) {
       throw new Error("There was an error getting account metadata")
     }
     const json = await response.json();
+    console.log(json.file)
     return json.file;
   }
 
@@ -53,7 +54,7 @@ export default function Account({ account, session }: Props) {
         <div className="relative flex flex-col flex-auto overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4" draggable="true">
           <div className="flex">
             <div className="w-full max-w-full px-1 mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
-              <img src={account.profilePicURL || data.profilePicURL} alt="profile_image" className="w-50 h-25 shadow-soft-sm rounded" />
+              <img src={account.profilePicURL || data.imageURL} alt="profile_image" className="w-50 h-25 shadow-soft-sm rounded" />
             </div>
             <div className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
