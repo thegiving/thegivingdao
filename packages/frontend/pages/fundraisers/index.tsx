@@ -44,8 +44,15 @@ export default function Fundraisers({ campaigns }: Props) {
 }
 
 const CAMPAIGN_QUERY = gql`
-  query Campaigns($id: String)  {
-    campaigns {
+  query Campaigns(
+    $id: String
+    $orderBy: Campaign_orderBy
+    $orderDirection: OrderDirection
+  ) {
+    campaigns(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
       id
       name
       description
@@ -77,7 +84,11 @@ export async function getServerSideProps({ req, res }) {
   )
 
   const { data } = await client.query({
-    query: CAMPAIGN_QUERY
+    query: CAMPAIGN_QUERY,
+    variables: {
+      orderBy: "createdAt",
+      orderDirection: "desc",
+    }
   });
 
   const campaigns = data.campaigns.map(async (c: TCampaign) => {
