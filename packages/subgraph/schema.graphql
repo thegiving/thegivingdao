@@ -2,7 +2,8 @@ type Campaign @entity {
   id: ID!
   campaignId: Bytes!
   account: Account!
-  kind: Int!,
+  kind: Int!
+  dataCID:  String!
   category: CampaignCategory!
   goal: BigInt!
   donated: BigInt!
@@ -60,33 +61,3 @@ type CampaignCategory @entity {
   categoryId: Bytes!
   name: String!
 }
-
-# enum AccountKind {
-#   Individual
-#   Charity
-#   NonProfitCharity
-#   NonProfit
-# }
-
-# enum CampaignKind {
-#   Governance
-#   NoGovernance
-#   OptionalGovernance
-# }
-
-# enum CampaignState {
-#   Active
-#   Draft
-#   Refunding
-#   Closed
-#   Voting
-# }
-
-# enum VeritifcationState {
-#   NotVerified
-#   Verified
-#   InReview
-#   NotApplicable
-# }
-
-

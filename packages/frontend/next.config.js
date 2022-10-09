@@ -2,9 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: { 
+  experimental: {
     externalDir: true,
-  }
+  },
+  images: {
+    domains: ["images.unsplash.com", "ipfs.io"],
+  },
 }
 
 module.exports = nextConfig

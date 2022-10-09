@@ -3,6 +3,11 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
 import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
 
@@ -21,7 +26,6 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
-
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.polygonMumbai],
   [
@@ -62,29 +66,33 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
   statement: 'Sign in to The Giving',
 })
 
+const queryClient = new QueryClient()
+
 export default function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
     <SessionProvider refetchInterval={0} session={pageProps.session}>
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
-          <RainbowKitProvider
-            appInfo={appInfo}
-            chains={chains}
-            theme={lightTheme({
-              accentColor: '#065F46',
-              accentColorForeground: 'white',
-              fontStack: 'system',
-              borderRadius: 'small',
-              overlayBlur: 'small',
-            })}>
-            <ApolloProvider client={client}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ApolloProvider>
-          </RainbowKitProvider>
-        </RainbowKitSiweNextAuthProvider>
-      </WagmiConfig>
+      <QueryClientProvider client={queryClient}>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
+            <RainbowKitProvider
+              appInfo={appInfo}
+              chains={chains}
+              theme={lightTheme({
+                accentColor: '#065F46',
+                accentColorForeground: 'white',
+                fontStack: 'system',
+                borderRadius: 'small',
+                overlayBlur: 'small',
+              })}>
+              <ApolloProvider client={client}>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ApolloProvider>
+            </RainbowKitProvider>
+          </RainbowKitSiweNextAuthProvider>
+        </WagmiConfig>
+      </QueryClientProvider>
     </SessionProvider>
   );
 };

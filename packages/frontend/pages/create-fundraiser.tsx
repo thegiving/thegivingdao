@@ -20,8 +20,7 @@ import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import connectContract from '../utils/connectContract';
 import Head from 'next/head';
-import Link from 'next/link';
-import { start } from 'repl';
+import router from 'next/router';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -70,6 +69,12 @@ function CreateFundraiser({ accounts, session, address }: Props) {
     // Make sure to revoke the data uris to avoid memory leaks
     return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
   }, [files, campaignCategoriesLoading]);
+
+  useEffect(() => {
+    if (success && campaignId) {
+      router.push(`/fundraisers/${campaignId}`)
+    }
+  }, [success])
 
   const thumbs = files.map((file: any) => (
     <div className="h-full w-full" key={file.name}>
@@ -309,14 +314,6 @@ function CreateFundraiser({ accounts, session, address }: Props) {
               </div>
             </div>
           </form>
-        )}
-        {success && campaignId && (
-          <div>
-            Success! Please wait a few minutes, then check out your fundraiser page{" "}
-            <span className="font-bold">
-              <Link href={`/fundraisers/${campaignId}`}>here</Link>
-            </span>
-          </div>
         )}
       </section>
     </div>

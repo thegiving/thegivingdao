@@ -90,6 +90,7 @@ export function handleCampaignCreated(event: CampaignCreated): void {
   if (!campaign && category != null && account != null) {
     campaign = new Campaign(event.params.campaign.id.toHex());
     campaign.campaignId = event.params.campaign.id;
+    campaign.dataCID = event.params.campaign.dataCID;
     campaign.account = account.id;
     campaign.kind = event.params.campaign.kind;
     campaign.category = category.id;
