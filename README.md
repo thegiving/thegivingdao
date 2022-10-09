@@ -25,6 +25,7 @@ The Giving is a fully decentralized charity organization like GoFundMe which is 
 - [Solidity](https://soliditylang.org/)
 - [Polygon](https://polygon.technology/)
 - [The Graph](https://thegraph.com/en/)
+- [Sign-in with Ethereum](https://login.xyz/)
 
 <!-- GETTING STARTED -->
 
