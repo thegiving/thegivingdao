@@ -55,7 +55,7 @@ async function storeData(req: NextApiRequest, res: NextApiResponse) {
       }
       const fileBuffer = Buffer.from(pass.read());
       const imageFile = new File([fileBuffer], imageName)
-      const cid = saveToIPFS(imageFile, JSON.stringify(fields))
+      const cid = await saveToIPFS(imageFile, JSON.stringify(fields))
       return res.status(200).json({ success: true, cid: cid });
     })
   } catch (err) {

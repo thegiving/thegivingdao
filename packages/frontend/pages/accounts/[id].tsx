@@ -23,7 +23,6 @@ export default function Account({ account, session }: Props) {
       throw new Error("There was an error getting account metadata")
     }
     const json = await response.json();
-    console.log(json)
     return json.file;
   }
 

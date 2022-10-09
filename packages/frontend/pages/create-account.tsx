@@ -75,6 +75,7 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
       } else {
         console.log("Form successfully submitted!");
         let responseJSON = await response.json();
+        console.log('cid ' + responseJSON.cid)
         await createAccount(responseJSON.cid);
       }
     } catch (error) {

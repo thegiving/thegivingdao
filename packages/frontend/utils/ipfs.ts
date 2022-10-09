@@ -4,7 +4,7 @@ export async function saveToIPFS(image: File, fields: string) {
   const body = { image: image.name, ...JSON.parse(fields) }
   const buffer = Buffer.from(JSON.stringify(body));
   let dataFile = new File([buffer], "data.json");
-  const cid = await storeFiles([image, dataFile])
+  const cid = await storeFiles([image, dataFile]);
   return cid;
 };
 
