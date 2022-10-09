@@ -7,7 +7,8 @@
   </a>
 
 <h3 align="center">The Giving - A Fully Decentralized Crowdfunding Platform</h3>
-<h3 align="center"> 🎉 ETH Global 2022 Hackathon First Place Winner of Spruce's Best Use of Sign in With Ethereum! 🚀 </h3>
+
+🎉 [ETH Global 2022 Hackathon](https://ethglobal.com/showcase/thegivingdao-6275v) First Place Winner of Best Use of Sign in With Ethereum! 🚀 
 
 
 </div>
