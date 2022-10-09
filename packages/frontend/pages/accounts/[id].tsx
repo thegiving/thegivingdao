@@ -20,7 +20,7 @@ export default function Account({ account, session }: Props) {
       method: "GET",
     })
     if (!response.ok) {
-      throw new Error("There was an error getting campaign metadata")
+      throw new Error("There was an error getting account metadata")
     }
     const json = await response.json();
     console.log(json)
