@@ -20,8 +20,6 @@ import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import connectContract from '../utils/connectContract';
 import Head from 'next/head';
-import Link from 'next/link';
-import { start } from 'repl';
 import router from 'next/router';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;

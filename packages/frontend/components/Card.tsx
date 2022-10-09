@@ -26,7 +26,7 @@ export default function Card({
   description,
 }: ICard): JSX.Element {
   return (
-    <div className={"group bg-white max-w-s relative shadow-md border rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-lightblue-400 transition ease-in ease-out hover:scale-105 duration-5"}>
+    <div className={"group bg-white max-w-s relative shadow-md border rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-lightblue-400 transition ease-in hover:scale-105 duration-5"}>
       <div className="w-full rounded-t-lg bg-gray-100 aspect-h-7 aspect-w-9  overflow-hidden relative group-hover:opacity-75">
         {image && <Image src={image} priority={true} alt="fundraiser image" layout="fill" />}
         <Link href={`/fundraisers/${id}`}>
@@ -38,7 +38,7 @@ export default function Card({
           {name}
         </h1>
         <p className="text-sm text-gray-400 hover:underline">
-          <Link href={`/account/${accountId}`}>
+          <Link href={`/accounts/${accountId}`}>
             <a className="hover:underline">
               {accountName}
             </a>

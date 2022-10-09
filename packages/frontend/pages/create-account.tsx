@@ -29,13 +29,13 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
     accept: { 'image/*': [] },
     onDrop: (acceptedFiles: any) => {
       setProfilePic(acceptedFiles[0]),
-      setFiles(
-        acceptedFiles.map((file: any) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
+        setFiles(
+          acceptedFiles.map((file: any) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          )
+        );
     },
   });
 
@@ -249,7 +249,7 @@ export default function CreateAccount({ address, session }: InferGetServerSidePr
           <div>
             Success! Please wait a few minutes, then check out your profile page{" "}
             <span className="font-bold">
-              <Link href={`/account/${accountId}`}>here</Link>
+              <Link href={`/accounts/${accountId}`}>here</Link>
             </span>
           </div>
         )}

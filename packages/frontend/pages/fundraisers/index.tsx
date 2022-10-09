@@ -70,7 +70,7 @@ const CAMPAIGN_QUERY = gql`
   }
 `
 
-export async function getServerSideProps({req, res}) {
+export async function getServerSideProps({ req, res }) {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=14400, stale-while-revalidate=86400'

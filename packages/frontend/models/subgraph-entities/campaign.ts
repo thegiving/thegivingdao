@@ -1,5 +1,5 @@
 import { TAccount, Account } from "./account"
-import { getIPFSData } from '../../utils/getIPFSData';
+import { fetchFromIPFS } from '../../utils/ipfs';
 
 export type TCampaign = {
   id: string
@@ -19,7 +19,7 @@ export type TCampaign = {
   imageURL?: string
 }
 
-export type TMetadata = Pick<TCampaign,'name' | 'description' | 'imageURL'>;
+export type TMetadata = Pick<TCampaign, 'name' | 'description' | 'imageURL'>;
 
 export type TCampaignCategory = {
   id: string
@@ -89,12 +89,15 @@ export class Campaign {
 
   private async setMetadata() {
     try {
-      const response = await getIPFSData(this.props.dataCID);
+      const cid = this.props.dataCID;
+      const response = await fetchFromIPFS(cid);
       if (!response) {
         return
       }
-      const {image, name, description} = response.file;
-      this.metadata = {imageURL: image, name, description} as TMetadata;
+      const { image, name, description } = JSON.parse(response);
+      const imageURL = "https://ipfs.io/ipfs/" + cid + '/' + image.toString();
+
+      this.metadata = { imageURL: imageURL, name, description } as TMetadata;
     } catch (e) {
       console.error(e)
     }
