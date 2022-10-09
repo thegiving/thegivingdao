@@ -15,6 +15,9 @@ export default function Fundraiser({ campaign }: Props) {
   const { data, isError, isLoading } = useQuery([campaign.dataCID], fetchCampaign)
 
   async function fetchCampaign(): Promise<TCampaign> {
+    if (!campaign?.dataCID) {
+      return
+    }
     const cid = campaign.dataCID;
     const response = await fetch(`/api/ipfs-data?cid=${cid}`, {
       method: "GET",
@@ -45,7 +48,7 @@ export default function Fundraiser({ campaign }: Props) {
         <div className="mx-auto grid max-w-screen-xl py-8 px-4 pt-16 text-primary">
           <div className={'flex justify-between'}>
             <h1 className="mb-4 w-1/2 text-4xl  font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-4xl">
-              {campaign.name || data.name}
+              {campaign.name || data?.name}
             </h1>
             <div className={'w-1/4 justify-end'}>
               <div className={'flex justify-between'}>
@@ -86,10 +89,10 @@ export default function Fundraiser({ campaign }: Props) {
             </div>
           </div>
 
-          <p className={'pt-8 pb-8 text-gray-900'}>{campaign.description || data.description}</p>
+          <p className={'pt-8 pb-8 text-gray-900'}>{campaign.description || data?.description}</p>
           <img
             className="rounded-t-lg"
-            src={campaign.imageURL || data.imageURL}
+            src={campaign.imageURL || data?.imageURL}
           />
           <div className="flex justify-center space-x-8 pt-8">
             <Button text={`Back`} buttonType={'Secondary'} onClick={e => router.push('/fundraisers')} />
