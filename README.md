@@ -1,12 +1,14 @@
 <div id="top"></div>
-
 <br />
+
 <div align="center" className="bg-white">
   <a href="https://github.com/thegiving/thegivingdao/">
     <img className="bg-white" src="packages/frontend/public/logo_with_text.png" alt="Logo" width="250" height="90">
   </a>
 
-<h3 align="center">The Giving - A Fully Decentralized GoFundMe</h3>
+<h3 align="center">The Giving - A Fully Decentralized Crowdfunding Platform</h3>
+<h3 align="center"> 🎉 ETH Global 2022 Hackathon First Place Winner of Spruce's Best Use of Sign in With Ethereum! 🚀 </h3>
+
 
 </div>
 
