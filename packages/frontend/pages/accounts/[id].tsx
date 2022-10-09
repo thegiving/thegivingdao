@@ -12,7 +12,7 @@ import client from "../../apollo-client";
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function Account({ account, session }: Props) {
-  const { data, error, isError, isLoading } = useQuery([account.dataCID], fetchAccount)
+  const { data, isError, isLoading } = useQuery([account.dataCID], fetchAccount)
 
   async function fetchAccount(): Promise<TAccount> {
     const cid = account.dataCID;
@@ -33,7 +33,7 @@ export default function Account({ account, session }: Props) {
   }
 
   if (isError) {
-    return <p>error</p>
+    return <p>Something went wrong. Please try to refresh in a few minutes</p>
   }
 
   if (isLoading) {

@@ -12,7 +12,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function Fundraiser({ campaign }: Props) {
   const router = useRouter();
-  const { data, error, isError, isLoading } = useQuery([campaign.dataCID], fetchCampaign)
+  const { data, isError, isLoading } = useQuery([campaign.dataCID], fetchCampaign)
 
   async function fetchCampaign(): Promise<TCampaign> {
     const cid = campaign.dataCID;
@@ -27,7 +27,7 @@ export default function Fundraiser({ campaign }: Props) {
   }
 
   if (isError) {
-    return <p>error</p>
+    return <p>Something went wrong. Please try to refresh in a few minutes</p>
   }
 
   if (isLoading) {
